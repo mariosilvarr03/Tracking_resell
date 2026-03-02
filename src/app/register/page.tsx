@@ -33,12 +33,12 @@ export default function RegisterPage() {
       <div className="card">
         <div className="card-header">
           <h1 className="text-2xl font-semibold">Criar conta</h1>
-          <p className="mt-1 text-sm text-gray-600">Regista-te para começar.</p>
+          <p className="mt-1 text-sm text-slate-600">Regista-te para começar.</p>
         </div>
         <div className="card-content">
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="text-sm text-gray-700">Email</label>
+              <label className="text-sm text-slate-700">Email</label>
               <input
                 className="input mt-2"
                 type="email"
@@ -49,7 +49,7 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <label className="text-sm text-gray-700">Password</label>
+              <label className="text-sm text-slate-700">Password</label>
               <input
                 className="input mt-2"
                 type="password"
@@ -58,7 +58,7 @@ export default function RegisterPage() {
                 required
                 minLength={6}
               />
-              <p className="mt-2 text-xs text-gray-500">Mínimo 6 caracteres.</p>
+              <p className="mt-2 text-xs text-slate-500">Mínimo 6 caracteres.</p>
             </div>
 
             {error && (

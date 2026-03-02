@@ -35,12 +35,12 @@ export default function LoginPage() {
       <div className="card">
         <div className="card-header">
           <h1 className="text-2xl font-semibold">Login</h1>
-          <p className="mt-1 text-sm text-gray-600">Entra na tua conta.</p>
+          <p className="mt-1 text-sm text-slate-600">Entra na tua conta.</p>
         </div>
         <div className="card-content">
           <form onSubmit={onSubmit} className="space-y-4">
             <div>
-              <label className="text-sm text-gray-700">Email</label>
+              <label className="text-sm text-slate-700">Email</label>
               <input
                 className="input mt-2"
                 type="email"
@@ -51,7 +51,7 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="text-sm text-gray-700">Password</label>
+              <label className="text-sm text-slate-700">Password</label>
               <input
                 className="input mt-2"
                 type="password"
@@ -71,9 +71,9 @@ export default function LoginPage() {
               {loading ? "A entrar..." : "Entrar"}
             </button>
 
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-slate-600">
               Não tens conta?{" "}
-              <a className="underline" href="/register">
+              <a className="font-medium text-blue-700 underline decoration-blue-300 underline-offset-2 hover:text-blue-800" href="/register">
                 Registar
               </a>
             </p>
