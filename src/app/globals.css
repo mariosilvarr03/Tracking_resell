@@ -159,14 +159,18 @@ textarea:focus-visible {
 .dashboard-page tbody tr:hover { background: #f3f7ff; }
 
 .dashboard-anual .cards-grid-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
-.dashboard-global .cards-grid-7 {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+.dashboard-global .cards-grid-6 {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 0.7rem;
 }
-.dashboard-global .cards-grid-7 .metric-card {
-  flex: 1 0 165px;
-  min-width: 165px;
+.dashboard-global .cards-grid-6 .metric-card {
+  min-width: 0;
+}
+
+.dashboard-global .cards-grid-6 .metric-card strong {
+  white-space: nowrap;
+  font-size: 1.72rem;
 }
 .dashboard-anual .kpi-month-row { padding: 0 1rem 1rem; font-size: 2.1rem; font-weight: 700; }
 .dashboard-anual .month-bars-grid {

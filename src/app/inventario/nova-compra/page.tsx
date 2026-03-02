@@ -24,7 +24,6 @@ export default function NovaCompraPage() {
     game: "",
     set_name: "",
     card_name: "",
-    grade: "",
     language: "",
     extra: ""
   });
@@ -68,10 +67,9 @@ export default function NovaCompraPage() {
       case "CARTAS":
         return (
           <>
-            <label>Jogo: <input value={form.game} onChange={e => setForm(f => ({ ...f, game: e.target.value }))} /></label>
+            <label>Coleção/Marca: <input value={form.game} onChange={e => setForm(f => ({ ...f, game: e.target.value }))} /></label>
             <label>Set: <input value={form.set_name} onChange={e => setForm(f => ({ ...f, set_name: e.target.value }))} /></label>
-            <label>Nome da carta: <input value={form.card_name} onChange={e => setForm(f => ({ ...f, card_name: e.target.value }))} /></label>
-            <label>Grau: <input value={form.grade} onChange={e => setForm(f => ({ ...f, grade: e.target.value }))} /></label>
+            <label>Produto: <input value={form.card_name} onChange={e => setForm(f => ({ ...f, card_name: e.target.value }))} /></label>
             <label>Idioma: <input value={form.language} onChange={e => setForm(f => ({ ...f, language: e.target.value }))} /></label>
           </>
         );
@@ -136,7 +134,6 @@ export default function NovaCompraPage() {
         game: "",
         set_name: "",
         card_name: "",
-        grade: "",
         language: "",
         extra: ""
       });
@@ -165,18 +162,20 @@ export default function NovaCompraPage() {
         <label>Preço de compra: <input required type="number" min="0" step="0.01" value={form.buy_price} onChange={e => setForm(f => ({ ...f, buy_price: e.target.value }))} /></label>
         <label>Data de compra: <input required type="date" value={form.buy_date} onChange={e => setForm(f => ({ ...f, buy_date: e.target.value }))} /></label>
         <label>Quantidade: <input required type="number" min="1" value={form.quantity} onChange={e => setForm(f => ({ ...f, quantity: Number(e.target.value) }))} /></label>
-        {renderExtraFields()}
+        <div className="category-fields">{renderExtraFields()}</div>
         {error && <div className="error">{error}</div>}
         {success && <div className="success">Compra adicionada com sucesso!</div>}
-        <button type="submit" disabled={loading}>{loading ? "A adicionar..." : "Adicionar"}</button>
+        <div className="submit-row">
+          <button type="submit" disabled={loading}>{loading ? "A adicionar..." : "Adicionar"}</button>
+        </div>
       </form>
       <style jsx>{`
         .nova-compra-container {
           padding: 2rem;
         }
         .add-form {
-          background: linear-gradient(180deg, #ffffff, #f6f9ff);
-          border: 1px solid #dbe7fb;
+          background: linear-gradient(180deg, #eef4ff, #e6efff);
+          border: 1px solid #c7d7f6;
           padding: 1.1em;
           border-radius: 0.8em;
           margin-bottom: 2em;
@@ -187,16 +186,34 @@ export default function NovaCompraPage() {
           margin-bottom: 0.75em;
           color: #213a63;
         }
+        .category-fields {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem 1rem;
+          margin-bottom: 0.75rem;
+        }
+        .category-fields :global(label) {
+          margin-bottom: 0;
+          display: inline-flex;
+          align-items: center;
+          white-space: nowrap;
+        }
         .add-form input, .add-form select, .add-form textarea {
           margin-left: 0.5em;
           padding: 0.45em 0.55em;
-          border: 1px solid #d5e2f8;
+          border: 1px solid #b7c9ea;
           border-radius: 0.45rem;
-          background: #fff;
+          background: #ffffff;
+        }
+        .category-fields :global(input),
+        .category-fields :global(select),
+        .category-fields :global(textarea) {
+          background: #fff !important;
+          min-width: 200px;
         }
         .add-form input:focus, .add-form select:focus, .add-form textarea:focus {
-          border-color: #3b82f6;
-          outline: 2px solid #dbeafe;
+          border-color: #2563eb;
+          outline: 2px solid #bfdbfe;
         }
         .add-form .error {
           color: #b42318;
@@ -205,6 +222,12 @@ export default function NovaCompraPage() {
         .add-form .success {
           color: #14653b;
           margin-bottom: 0.5em;
+        }
+        .add-form .submit-row {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+          margin-top: 0.75rem;
         }
         .add-form button {
           border: 1px solid #1d4ed8;

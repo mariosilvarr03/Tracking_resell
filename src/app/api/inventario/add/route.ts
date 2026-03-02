@@ -101,7 +101,7 @@ export async function POST(request: Request) {
           game: body.game,
           set_name: body.set_name,
           card_name: body.card_name,
-          grade: body.grade,
+          grade: body.grade ?? "",
           language: body.language,
         }]));
       break;

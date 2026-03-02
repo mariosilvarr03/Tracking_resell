@@ -7,10 +7,6 @@ type RelatedItem = {
   buy_price: number;
 };
 
-type RelatedPlatform = {
-  name: string;
-};
-
 function pickRelated<T>(value: T | T[] | null | undefined): T | null {
   if (!value) return null;
   if (Array.isArray(value)) return value[0] ?? null;
@@ -152,7 +148,7 @@ export async function PATCH(request: Request) {
 
   const { data: saleView, error: saleViewError } = await supabase
     .from("sales")
-    .select("id, sold_at, sold_quantity, sold_price, fees, item:items(title, type, buy_price), platform:platforms(name)")
+    .select("id, sold_at, sold_quantity, sold_price, fees, platform_id, item:items(title, type, buy_price)")
     .eq("id", saleId)
     .single();
 
@@ -161,14 +157,24 @@ export async function PATCH(request: Request) {
   }
 
   const saleItem = pickRelated(saleView.item as RelatedItem | RelatedItem[] | null | undefined);
-  const salePlatform = pickRelated(saleView.platform as RelatedPlatform | RelatedPlatform[] | null | undefined);
+  let salePlatformName: string | null = null;
+
+  if (saleView.platform_id) {
+    const { data: platformData } = await supabase
+      .from("platforms")
+      .select("name")
+      .eq("id", saleView.platform_id)
+      .single();
+
+    salePlatformName = platformData?.name ?? null;
+  }
 
   return NextResponse.json({
     sale: {
       id: saleView.id,
       title: saleItem?.title ?? "-",
       type: saleItem?.type ?? "SEM_CATEGORIA",
-      platform: salePlatform?.name ?? null,
+      platform: salePlatformName,
       sold_at: saleView.sold_at,
       sold_quantity: Number(saleView.sold_quantity ?? 0),
       sold_price: Number(saleView.sold_price ?? 0),

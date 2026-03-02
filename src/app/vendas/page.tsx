@@ -1,14 +1,11 @@
 import { supabaseServer } from "../lib/supabase/server";
 import VendasTable from "./VendasTable";
+import { createClient } from "@supabase/supabase-js";
 
 type RelatedItem = {
   title: string;
   type: string;
   buy_price: number;
-};
-
-type RelatedPlatform = {
-  name: string;
 };
 
 type SaleRow = {
@@ -29,8 +26,8 @@ type SaleRowRaw = {
   sold_quantity: number;
   sold_price: number;
   fees: number;
+  platform_id: number | string | null;
   item: RelatedItem[] | RelatedItem | null;
-  platform: RelatedPlatform[] | RelatedPlatform | null;
 };
 
 function pickRelated<T>(value: T | T[] | null | undefined): T | null {
@@ -44,22 +41,54 @@ export default async function VendasPage() {
 
   const { data, error } = await supabase
     .from("sales")
-    .select("id, sold_at, sold_quantity, sold_price, fees, item:items(title, type, buy_price), platform:platforms(name)")
+    .select("id, sold_at, sold_quantity, sold_price, fees, platform_id, item:items(title, type, buy_price)")
     .order("sold_at", { ascending: false });
 
   if (error) {
     return <div>Erro ao carregar vendas: {error.message}</div>;
   }
 
-  const normalizedSales = ((data ?? []) as SaleRowRaw[]).map((sale) => {
+  const rows = (data ?? []) as SaleRowRaw[];
+  const platformIds = Array.from(
+    new Set(
+      rows
+        .map((sale) => (sale.platform_id == null ? null : Number(sale.platform_id)))
+        .filter((value): value is number => Number.isFinite(value))
+    )
+  );
+
+  let platformById = new Map<number, string>();
+  if (platformIds.length > 0) {
+    const adminClient = process.env.SUPABASE_SERVICE_ROLE_KEY
+      ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+          auth: {
+            autoRefreshToken: false,
+            persistSession: false,
+          },
+        })
+      : null;
+
+    const clientForPlatforms = adminClient ?? supabase;
+
+    const { data: platforms } = await clientForPlatforms
+      .from("platforms")
+      .select("id, name")
+      .in("id", platformIds);
+
+    platformById = new Map(
+      (platforms ?? []).map((platform) => [Number(platform.id), platform.name])
+    );
+  }
+
+  const normalizedSales = rows.map((sale) => {
     const item = pickRelated(sale.item);
-    const platform = pickRelated(sale.platform);
 
     return {
       id: sale.id,
       title: item?.title ?? "-",
       type: item?.type ?? "SEM_CATEGORIA",
-      platform: platform?.name ?? null,
+      platform:
+        sale.platform_id == null ? null : platformById.get(Number(sale.platform_id)) ?? null,
       sold_at: sale.sold_at,
       sold_quantity: Number(sale.sold_quantity ?? 0),
       sold_price: Number(sale.sold_price ?? 0),

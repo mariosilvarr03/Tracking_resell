@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { supabaseServer } from "../../lib/supabase/server";
+import { createClient } from "@supabase/supabase-js";
 
 type ItemRow = {
   id: string;
@@ -15,7 +16,7 @@ type ItemRow = {
 type SaleBaseRow = {
   id: string;
   item_id: string;
-  platform_id: string | null;
+  platform_id: number | string | null;
   sold_at: string;
   sold_quantity: number;
   sold_price: number;
@@ -35,17 +36,12 @@ type SaleRow = {
   fees: number;
 };
 type PlatformRow = {
-  id: string;
+  id: number | string;
   name: string;
 };
 
 function euro(value: number) {
   return `€ ${value.toFixed(2)}`;
-}
-
-function daysBetween(start: string, end: string) {
-  const diff = new Date(end).getTime() - new Date(start).getTime();
-  return Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
 }
 
 export default async function DashboardGlobalPage() {
@@ -54,7 +50,6 @@ export default async function DashboardGlobalPage() {
   const [
     { data: itemsData, error: itemsError },
     { data: salesBaseData, error: salesError },
-    { data: platformsData, error: platformsError },
   ] = await Promise.all([
     supabase
       .from("items")
@@ -64,25 +59,52 @@ export default async function DashboardGlobalPage() {
       .from("sales")
       .select("id, item_id, platform_id, sold_at, sold_quantity, sold_price, fees")
       .order("sold_at", { ascending: false }),
-    supabase
-      .from("platforms")
-      .select("id, name"),
   ]);
 
   if (itemsError) return <div>Erro ao carregar dashboard global: {itemsError.message}</div>;
   if (salesError) return <div>Erro ao carregar dashboard global: {salesError.message}</div>;
-  if (platformsError) return <div>Erro ao carregar dashboard global: {platformsError.message}</div>;
-
   const items = (itemsData ?? []) as ItemRow[];
   const salesBase = (salesBaseData ?? []) as SaleBaseRow[];
-  const platforms = (platformsData ?? []) as PlatformRow[];
+
+  const platformIds = Array.from(
+    new Set(
+      salesBase
+        .map((sale) => (sale.platform_id == null ? null : Number(sale.platform_id)))
+        .filter((value): value is number => Number.isFinite(value))
+    )
+  );
+
+  let platforms: PlatformRow[] = [];
+  if (platformIds.length > 0) {
+    const adminClient = process.env.SUPABASE_SERVICE_ROLE_KEY
+      ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+          auth: {
+            autoRefreshToken: false,
+            persistSession: false,
+          },
+        })
+      : null;
+
+    const clientForPlatforms = adminClient ?? supabase;
+
+    const { data: platformsData, error: platformsError } = await clientForPlatforms
+      .from("platforms")
+      .select("id, name")
+      .in("id", platformIds);
+
+    if (platformsError) {
+      return <div>Erro ao carregar dashboard global: {platformsError.message}</div>;
+    }
+
+    platforms = (platformsData ?? []) as PlatformRow[];
+  }
 
   const itemById = new Map(items.map((item) => [item.id, item]));
-  const platformById = new Map(platforms.map((platform) => [platform.id, platform.name]));
+  const platformById = new Map(platforms.map((platform) => [Number(platform.id), platform.name]));
 
   const sales = salesBase.map((sale) => {
     const item = itemById.get(sale.item_id);
-    const platformName = sale.platform_id ? platformById.get(sale.platform_id) ?? null : null;
+    const platformName = sale.platform_id == null ? null : platformById.get(Number(sale.platform_id)) ?? null;
 
     return {
       id: sale.id,
@@ -113,10 +135,6 @@ export default async function DashboardGlobalPage() {
 
   const profitMargin = vendasTotal > 0 ? (lucroTotal / vendasTotal) * 100 : 0;
   const roi = comprasTotal > 0 ? (lucroTotal / comprasTotal) * 100 : 0;
-
-  const holdMedioDias = sales.length
-    ? sales.reduce((sum, sale) => sum + daysBetween(sale.buy_date ?? sale.sold_at, sale.sold_at), 0) / sales.length
-    : 0;
 
   const lucroPorPlataforma = Object.entries(
     sales.reduce<Record<string, number>>((acc, sale) => {
@@ -210,14 +228,13 @@ export default async function DashboardGlobalPage() {
         </div>
       </div>
 
-      <div className="cards-grid cards-grid-7">
+      <div className="cards-grid cards-grid-6">
         <div className="metric-card"><span>Compras total</span><strong>{euro(comprasTotal)}</strong></div>
         <div className="metric-card"><span>Vendas total</span><strong>{euro(vendasTotal)}</strong></div>
         <div className="metric-card"><span>Lucro total</span><strong>{euro(lucroTotal)}</strong></div>
         <div className="metric-card"><span>Profit margin</span><strong>{profitMargin.toFixed(1)}%</strong></div>
         <div className="metric-card"><span>ROI (lucro/compras)</span><strong>{roi.toFixed(1)}%</strong></div>
         <div className="metric-card"><span>Capital preso</span><strong>{euro(capitalPreso)}</strong></div>
-        <div className="metric-card"><span>Hold médio (vendidos)</span><strong>{holdMedioDias.toFixed(1)} dias</strong></div>
       </div>
 
       <div className="two-col">
