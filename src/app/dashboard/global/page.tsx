@@ -12,6 +12,16 @@ type ItemRow = {
   status: "EM_STOCK" | "VENDIDO";
 };
 
+type SaleBaseRow = {
+  id: string;
+  item_id: string;
+  platform_id: string | null;
+  sold_at: string;
+  sold_quantity: number;
+  sold_price: number;
+  fees: number;
+};
+
 type SaleRow = {
   id: string;
   title: string;
@@ -23,6 +33,10 @@ type SaleRow = {
   sold_quantity: number;
   sold_price: number;
   fees: number;
+};
+type PlatformRow = {
+  id: string;
+  name: string;
 };
 
 function euro(value: number) {
@@ -37,41 +51,68 @@ function daysBetween(start: string, end: string) {
 export default async function DashboardGlobalPage() {
   const supabase = await supabaseServer();
 
-  const [{ data: itemsData, error: itemsError }, { data: salesData, error: salesError }] = await Promise.all([
+  const [
+    { data: itemsData, error: itemsError },
+    { data: salesBaseData, error: salesError },
+    { data: platformsData, error: platformsError },
+  ] = await Promise.all([
     supabase
       .from("items")
       .select("id, title, type, buy_date, buy_price, quantity, sold_quantity_total, status")
       .order("buy_date", { ascending: false }),
     supabase
-      .from("v_sales_enriched")
-      .select("id, title, type, platform, buy_date, buy_unit_cost, sold_at, sold_quantity, sold_price, fees")
+      .from("sales")
+      .select("id, item_id, platform_id, sold_at, sold_quantity, sold_price, fees")
       .order("sold_at", { ascending: false }),
+    supabase
+      .from("platforms")
+      .select("id, name"),
   ]);
 
   if (itemsError) return <div>Erro ao carregar dashboard global: {itemsError.message}</div>;
   if (salesError) return <div>Erro ao carregar dashboard global: {salesError.message}</div>;
+  if (platformsError) return <div>Erro ao carregar dashboard global: {platformsError.message}</div>;
 
   const items = (itemsData ?? []) as ItemRow[];
-  const sales = (salesData ?? []) as SaleRow[];
+  const salesBase = (salesBaseData ?? []) as SaleBaseRow[];
+  const platforms = (platformsData ?? []) as PlatformRow[];
+
+  const itemById = new Map(items.map((item) => [item.id, item]));
+  const platformById = new Map(platforms.map((platform) => [platform.id, platform.name]));
+
+  const sales = salesBase.map((sale) => {
+    const item = itemById.get(sale.item_id);
+    const platformName = sale.platform_id ? platformById.get(sale.platform_id) ?? null : null;
+
+    return {
+      id: sale.id,
+      title: item?.title ?? "-",
+      type: item?.type ?? "SEM_CATEGORIA",
+      platform: platformName,
+      buy_date: item?.buy_date ?? sale.sold_at,
+      buy_unit_cost: Number(item?.buy_price ?? 0),
+      sold_at: sale.sold_at,
+      sold_quantity: Number(sale.sold_quantity ?? 0),
+      sold_price: Number(sale.sold_price ?? 0),
+      fees: Number(sale.fees ?? 0),
+    } satisfies SaleRow;
+  });
 
   const comprasTotal = items.reduce((sum, item) => sum + Number(item.buy_price) * Number(item.quantity), 0);
-  const vendasTotal = sales.reduce((sum, sale) => sum + Number(sale.sold_price) * Number(sale.sold_quantity), 0);
-
-  const lucroTotal = sales.reduce((sum, sale) => {
-    const soldQty = Number(sale.sold_quantity);
-    const soldUnit = Number(sale.sold_price);
-    const buyUnit = Number(sale.buy_unit_cost ?? 0);
-    const freteUnit = Number(sale.fees ?? 0);
-    return sum + (soldUnit - buyUnit - freteUnit) * soldQty;
-  }, 0);
-
-  const profitMargin = vendasTotal > 0 ? (lucroTotal / vendasTotal) * 100 : 0;
-  const roi = comprasTotal > 0 ? (lucroTotal / comprasTotal) * 100 : 0;
+  const vendasTotal = salesBase.reduce(
+    (sum, sale) => sum + Number(sale.sold_price ?? 0) * Number(sale.sold_quantity ?? 0),
+    0
+  );
 
   const capitalPreso = items.reduce((sum, item) => {
     const stock = Number(item.quantity) - Number(item.sold_quantity_total);
     return stock > 0 ? sum + Number(item.buy_price) * stock : sum;
   }, 0);
+
+  const lucroTotal = vendasTotal - comprasTotal - capitalPreso;
+
+  const profitMargin = vendasTotal > 0 ? (lucroTotal / vendasTotal) * 100 : 0;
+  const roi = comprasTotal > 0 ? (lucroTotal / comprasTotal) * 100 : 0;
 
   const holdMedioDias = sales.length
     ? sales.reduce((sum, sale) => sum + daysBetween(sale.buy_date ?? sale.sold_at, sale.sold_at), 0) / sales.length

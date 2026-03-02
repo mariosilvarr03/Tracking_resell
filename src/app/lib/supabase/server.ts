@@ -19,9 +19,13 @@ export async function supabaseServer() {
           }));
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch {
+            // Server Components têm cookies read-only; o refresh de sessão fica a cargo do middleware.
+          }
         },
       },
     }
