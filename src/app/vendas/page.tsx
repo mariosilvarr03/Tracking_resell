@@ -22,6 +22,7 @@ type SaleRow = {
 
 type SaleRowRaw = {
   id: string;
+  item_id: string;
   sold_at: string;
   sold_quantity: number;
   sold_price: number;
@@ -30,19 +31,151 @@ type SaleRowRaw = {
   item: RelatedItem[] | RelatedItem | null;
 };
 
+type SearchParamsInput = {
+  query?: string;
+  category?: string;
+  platform?: string;
+  orderBy?: string;
+  page?: string;
+  pageSize?: string;
+};
+
+function parsePositiveInt(value: string | undefined, fallback: number) {
+  const parsed = Number(value);
+  if (!Number.isInteger(parsed) || parsed < 1) return fallback;
+  return parsed;
+}
+
 function pickRelated<T>(value: T | T[] | null | undefined): T | null {
   if (!value) return null;
   if (Array.isArray(value)) return value[0] ?? null;
   return value;
 }
 
-export default async function VendasPage() {
-  const supabase = await supabaseServer();
+export default async function VendasPage({
+  searchParams,
+}: {
+  searchParams?: Promise<SearchParamsInput>;
+}) {
+  const params = (await searchParams) ?? {};
+  const query = String(params.query ?? "").trim();
+  const queryNormalized = query.toLowerCase();
+  const category = String(params.category ?? "all");
+  const platform = String(params.platform ?? "all");
+  const orderBy = String(params.orderBy ?? "sold_at_desc");
+  const page = parsePositiveInt(params.page, 1);
+  const pageSizeRaw = parsePositiveInt(params.pageSize, 25);
+  const pageSize = [25, 50, 100].includes(pageSizeRaw) ? pageSizeRaw : 25;
 
-  const { data, error } = await supabase
+  const supabase = await supabaseServer();
+  const adminClient = process.env.SUPABASE_SERVICE_ROLE_KEY
+    ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false,
+        },
+      })
+    : null;
+
+  const clientForPlatforms = adminClient ?? supabase;
+
+  let filteredItemIds: string[] | null = null;
+  let filteredPlatformIds: number[] | null = null;
+
+  if (category !== "all") {
+    const { data: categoryItems } = await supabase
+      .from("items")
+      .select("id")
+      .eq("type", category);
+
+    filteredItemIds = (categoryItems ?? []).map((row) => row.id as string);
+  }
+
+  if (platform !== "all") {
+    const { data: platformRows } = await clientForPlatforms
+      .from("platforms")
+      .select("id")
+      .eq("name", platform)
+      .limit(1);
+
+    filteredPlatformIds = (platformRows ?? []).map((row) => Number(row.id));
+  }
+
+  if (queryNormalized.length > 0) {
+    const [{ data: queryItems }, { data: queryPlatforms }] = await Promise.all([
+      supabase
+        .from("items")
+        .select("id")
+        .or(`title.ilike.%${queryNormalized}%,type.ilike.%${queryNormalized}%`),
+      clientForPlatforms
+        .from("platforms")
+        .select("id")
+        .ilike("name", `%${queryNormalized}%`),
+    ]);
+
+    const queryItemIds = (queryItems ?? []).map((row) => row.id as string);
+    const queryPlatformIds = (queryPlatforms ?? []).map((row) => Number(row.id));
+
+    filteredItemIds = filteredItemIds ? filteredItemIds.filter((id) => queryItemIds.includes(id)) : queryItemIds;
+    filteredPlatformIds = filteredPlatformIds
+      ? filteredPlatformIds.filter((id) => queryPlatformIds.includes(id))
+      : queryPlatformIds;
+  }
+
+  const shouldReturnEmpty =
+    (filteredItemIds !== null && filteredItemIds.length === 0) &&
+    (filteredPlatformIds !== null && filteredPlatformIds.length === 0);
+
+  if (shouldReturnEmpty) {
+    return (
+      <VendasTable
+        sales={[]}
+        initialFilters={{ query, category, platform, orderBy }}
+        pagination={{ page, pageSize, totalCount: 0, totalPages: 1 }}
+      />
+    );
+  }
+
+  let queryBuilder = supabase
     .from("sales")
-    .select("id, sold_at, sold_quantity, sold_price, fees, platform_id, item:items(title, type, buy_price)")
-    .order("sold_at", { ascending: false });
+    .select("id, item_id, sold_at, sold_quantity, sold_price, fees, platform_id, item:items(title, type, buy_price)", {
+      count: "exact",
+    });
+
+  if (filteredItemIds && filteredItemIds.length > 0) {
+    queryBuilder = queryBuilder.in("item_id", filteredItemIds);
+  }
+
+  if (filteredPlatformIds && filteredPlatformIds.length > 0) {
+    queryBuilder = queryBuilder.in("platform_id", filteredPlatformIds);
+  }
+
+  switch (orderBy) {
+    case "sold_at_asc":
+      queryBuilder = queryBuilder.order("sold_at", { ascending: true });
+      break;
+    case "price_asc":
+      queryBuilder = queryBuilder.order("sold_price", { ascending: true });
+      break;
+    case "price_desc":
+      queryBuilder = queryBuilder.order("sold_price", { ascending: false });
+      break;
+    case "quantity_asc":
+      queryBuilder = queryBuilder.order("sold_quantity", { ascending: true });
+      break;
+    case "quantity_desc":
+      queryBuilder = queryBuilder.order("sold_quantity", { ascending: false });
+      break;
+    case "sold_at_desc":
+    default:
+      queryBuilder = queryBuilder.order("sold_at", { ascending: false });
+      break;
+  }
+
+  const from = (page - 1) * pageSize;
+  const to = from + pageSize - 1;
+
+  const { data, error, count } = await queryBuilder.range(from, to);
 
   if (error) {
     return <div>Erro ao carregar vendas: {error.message}</div>;
@@ -59,17 +192,6 @@ export default async function VendasPage() {
 
   let platformById = new Map<number, string>();
   if (platformIds.length > 0) {
-    const adminClient = process.env.SUPABASE_SERVICE_ROLE_KEY
-      ? createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY, {
-          auth: {
-            autoRefreshToken: false,
-            persistSession: false,
-          },
-        })
-      : null;
-
-    const clientForPlatforms = adminClient ?? supabase;
-
     const { data: platforms } = await clientForPlatforms
       .from("platforms")
       .select("id, name")
@@ -97,5 +219,14 @@ export default async function VendasPage() {
     } satisfies SaleRow;
   });
 
-  return <VendasTable sales={normalizedSales} />;
+  const totalCount = Number(count ?? 0);
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+
+  return (
+    <VendasTable
+      sales={normalizedSales}
+      initialFilters={{ query, category, platform, orderBy }}
+      pagination={{ page, pageSize, totalCount, totalPages }}
+    />
+  );
 }

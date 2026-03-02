@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "../lib/supabase/client";
 
 // Helper para calcular dias de hold
@@ -21,8 +21,66 @@ type Item = {
   buy_date: string;
 };
 
-export default function InventarioTable({ items }: { items: Item[] }) {
+type InventoryFilters = {
+  query: string;
+  status: string;
+  category: string;
+  orderBy: string;
+};
+
+type PaginationMeta = {
+  page: number;
+  pageSize: number;
+  totalCount: number;
+  totalPages: number;
+};
+
+function escapeCsvCell(value: string | number | null | undefined) {
+  const normalized = String(value ?? "").replace(/"/g, '""');
+  return `"${normalized}"`;
+}
+
+function toCsv(rows: Array<Array<string | number | null | undefined>>) {
+  return rows.map((row) => row.map((value) => escapeCsvCell(value)).join(";")).join("\n");
+}
+
+function getVisiblePages(currentPage: number, totalPages: number): Array<number | "dots-left" | "dots-right"> {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages: Array<number | "dots-left" | "dots-right"> = [1];
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  if (start > 2) {
+    pages.push("dots-left");
+  }
+
+  for (let page = start; page <= end; page += 1) {
+    pages.push(page);
+  }
+
+  if (end < totalPages - 1) {
+    pages.push("dots-right");
+  }
+
+  pages.push(totalPages);
+  return pages;
+}
+
+export default function InventarioTable({
+  items,
+  initialFilters,
+  pagination,
+}: {
+  items: Item[];
+  initialFilters: InventoryFilters;
+  pagination: PaginationMeta;
+}) {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [localItems, setLocalItems] = React.useState(items);
   const [editingId, setEditingId] = React.useState<string | null>(null);
   const [savingId, setSavingId] = React.useState<string | null>(null);
@@ -39,8 +97,7 @@ export default function InventarioTable({ items }: { items: Item[] }) {
     []
   );
 
-  const [draftFilters, setDraftFilters] = React.useState(defaultFilters);
-  const [appliedFilters, setAppliedFilters] = React.useState(defaultFilters);
+  const [draftFilters, setDraftFilters] = React.useState<InventoryFilters>(initialFilters);
 
   const [editForm, setEditForm] = React.useState({
     title: "",
@@ -49,56 +106,65 @@ export default function InventarioTable({ items }: { items: Item[] }) {
     quantity: 1,
   });
 
-  const visibleItems = React.useMemo(() => {
-    const normalizedQuery = appliedFilters.query.trim().toLowerCase();
+  const visibleItems = React.useMemo(() => localItems, [localItems]);
 
-    const filtered = localItems.filter((item) => {
-      const stock = item.quantity - item.sold_quantity_total;
-      const status = stock > 0 ? "EM_STOCK" : "VENDIDO";
+  React.useEffect(() => {
+    setLocalItems(items);
+  }, [items]);
 
-      const matchesQuery =
-        normalizedQuery.length === 0 ||
-        item.title.toLowerCase().includes(normalizedQuery) ||
-        item.type.toLowerCase().includes(normalizedQuery);
+  React.useEffect(() => {
+    setDraftFilters(initialFilters);
+  }, [initialFilters]);
 
-      const matchesStatus = appliedFilters.status === "ALL" || status === appliedFilters.status;
-      const matchesCategory =
-        appliedFilters.category === "ALL" || item.type === appliedFilters.category;
+  function navigateWithParams(updates: Record<string, string>) {
+    const params = new URLSearchParams(searchParams.toString());
 
-      return matchesQuery && matchesStatus && matchesCategory;
-    });
-
-    filtered.sort((first, second) => {
-      switch (appliedFilters.orderBy) {
-        case "buy_date_asc":
-          return new Date(first.buy_date).getTime() - new Date(second.buy_date).getTime();
-        case "buy_date_desc":
-          return new Date(second.buy_date).getTime() - new Date(first.buy_date).getTime();
-        case "title_asc":
-          return first.title.localeCompare(second.title, "pt");
-        case "title_desc":
-          return second.title.localeCompare(first.title, "pt");
-        case "price_asc":
-          return first.buy_price - second.buy_price;
-        case "price_desc":
-          return second.buy_price - first.buy_price;
-        case "stock_asc": {
-          const firstStock = first.quantity - first.sold_quantity_total;
-          const secondStock = second.quantity - second.sold_quantity_total;
-          return firstStock - secondStock;
-        }
-        case "stock_desc": {
-          const firstStock = first.quantity - first.sold_quantity_total;
-          const secondStock = second.quantity - second.sold_quantity_total;
-          return secondStock - firstStock;
-        }
-        default:
-          return 0;
+    Object.entries(updates).forEach(([key, value]) => {
+      if (!value) {
+        params.delete(key);
+      } else {
+        params.set(key, value);
       }
     });
 
-    return filtered;
-  }, [localItems, appliedFilters]);
+    const next = params.toString();
+    router.push(next ? `${pathname}?${next}` : pathname);
+  }
+
+  function applyFilters() {
+    navigateWithParams({
+      query: draftFilters.query,
+      status: draftFilters.status,
+      category: draftFilters.category,
+      orderBy: draftFilters.orderBy,
+      page: "1",
+    });
+  }
+
+  function clearFilters() {
+    setDraftFilters(defaultFilters);
+    navigateWithParams({
+      query: "",
+      status: defaultFilters.status,
+      category: defaultFilters.category,
+      orderBy: defaultFilters.orderBy,
+      page: "1",
+    });
+  }
+
+  function goToPage(nextPage: number) {
+    const clamped = Math.min(Math.max(nextPage, 1), pagination.totalPages);
+    navigateWithParams({ page: String(clamped) });
+  }
+
+  function changePageSize(value: number) {
+    navigateWithParams({ pageSize: String(value), page: "1" });
+  }
+
+  const visiblePages = React.useMemo(
+    () => getVisiblePages(pagination.page, pagination.totalPages),
+    [pagination.page, pagination.totalPages]
+  );
 
   async function getAccessToken() {
     const supabase = supabaseBrowser();
@@ -204,6 +270,58 @@ export default function InventarioTable({ items }: { items: Item[] }) {
     }
   }
 
+  function exportVisibleItemsCsv() {
+    const header = [
+      "ID",
+      "Nome",
+      "Categoria",
+      "Quantidade",
+      "Qtd vendida",
+      "Stock",
+      "Status",
+      "Preço produto",
+      "Preço total",
+      "Data compra",
+      "Tempo hold (dias)",
+    ];
+
+    const rows = visibleItems.map((item) => {
+      const soldQuantity = Number(item.sold_quantity_total ?? 0);
+      const quantity = Number(item.quantity ?? 0);
+      const stock = quantity - soldQuantity;
+      const status = stock > 0 ? "EM STOCK" : "VENDIDO";
+      const unitPrice = Number(item.buy_price ?? 0);
+      const totalPrice = unitPrice * quantity;
+
+      return [
+        item.id,
+        item.title,
+        item.type,
+        quantity,
+        soldQuantity,
+        stock,
+        status,
+        unitPrice.toFixed(2),
+        totalPrice.toFixed(2),
+        item.buy_date,
+        getHoldDays(item.buy_date),
+      ];
+    });
+
+    const csv = toCsv([header, ...rows]);
+    const blob = new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const dateTag = new Date().toISOString().slice(0, 10);
+
+    link.href = url;
+    link.setAttribute("download", `inventario_${dateTag}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="inventario-container">
       <h2>Inventário</h2>
@@ -212,8 +330,33 @@ export default function InventarioTable({ items }: { items: Item[] }) {
 
       <section className="filters-card">
         <div className="filters-header">
-          <h3>Filtros</h3>
-          <p>Refina por pesquisa, status, categoria e ordenação</p>
+          <div className="filters-header-top">
+            <div>
+              <h3>Filtros</h3>
+              <p>Refina por pesquisa, status, categoria e ordenação</p>
+            </div>
+
+            <div className="filters-actions">
+              <button type="button" className="apply-btn" onClick={applyFilters}>
+                Aplicar
+              </button>
+              <button
+                type="button"
+                className="clear-btn"
+                onClick={clearFilters}
+              >
+                Limpar
+              </button>
+              <button
+                type="button"
+                className="export-btn"
+                onClick={exportVisibleItemsCsv}
+                disabled={visibleItems.length === 0}
+              >
+                Exportar CSV
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="filters-grid">
@@ -278,21 +421,6 @@ export default function InventarioTable({ items }: { items: Item[] }) {
             </select>
           </label>
 
-          <div className="filters-actions">
-            <button type="button" className="apply-btn" onClick={() => setAppliedFilters(draftFilters)}>
-              Aplicar
-            </button>
-            <button
-              type="button"
-              className="clear-btn"
-              onClick={() => {
-                setDraftFilters(defaultFilters);
-                setAppliedFilters(defaultFilters);
-              }}
-            >
-              Limpar
-            </button>
-          </div>
         </div>
       </section>
 
@@ -430,6 +558,56 @@ export default function InventarioTable({ items }: { items: Item[] }) {
 
       {visibleItems.length === 0 && <p className="empty-state">Sem itens para os filtros selecionados.</p>}
 
+      <div className="pagination-row">
+        <div className="pagination-meta">
+          <span>Total: {pagination.totalCount}</span>
+          <span>Página {pagination.page} de {pagination.totalPages}</span>
+        </div>
+
+        <div className="pagination-controls">
+          <label>
+            Por página
+            <select
+              value={String(pagination.pageSize)}
+              onChange={(event) => changePageSize(Number(event.target.value))}
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+
+          <button type="button" onClick={() => goToPage(pagination.page - 1)} disabled={pagination.page <= 1}>
+            Anterior
+          </button>
+
+          {visiblePages.map((value) => {
+            if (typeof value !== "number") {
+              return <span key={value} className="pagination-dots">...</span>;
+            }
+
+            return (
+              <button
+                key={value}
+                type="button"
+                className={value === pagination.page ? "page-btn page-btn-active" : "page-btn"}
+                onClick={() => goToPage(value)}
+              >
+                {value}
+              </button>
+            );
+          })}
+
+          <button
+            type="button"
+            onClick={() => goToPage(pagination.page + 1)}
+            disabled={pagination.page >= pagination.totalPages}
+          >
+            Seguinte
+          </button>
+        </div>
+      </div>
+
       <style jsx>{`
         .inventario-container {
           padding: 2rem;
@@ -446,6 +624,12 @@ export default function InventarioTable({ items }: { items: Item[] }) {
           padding: 1rem 1rem 0.75rem;
           border-bottom: 1px solid #eaf1ff;
         }
+        .filters-header-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 1rem;
+        }
         .filters-header h3 {
           margin: 0;
           font-size: 1.1rem;
@@ -457,7 +641,7 @@ export default function InventarioTable({ items }: { items: Item[] }) {
         .filters-grid {
           padding: 1rem;
           display: grid;
-          grid-template-columns: repeat(5, minmax(0, 1fr));
+          grid-template-columns: repeat(4, minmax(0, 1fr));
           gap: 0.9rem;
           align-items: end;
         }
@@ -486,6 +670,20 @@ export default function InventarioTable({ items }: { items: Item[] }) {
         }
         .filters-actions .clear-btn:hover {
           background: #e0ecff;
+        }
+        .filters-actions .export-btn {
+          background: #ffffff;
+          color: #123264;
+          border: 1px solid #cfe0ff;
+          padding: 0.42rem 0.62rem;
+          border-radius: 0.55rem;
+        }
+        .filters-actions .export-btn:hover {
+          background: #f4f8ff;
+        }
+        .filters-actions .export-btn:disabled {
+          opacity: 0.55;
+          cursor: not-allowed;
         }
         .inventario-table {
           width: 100%;
@@ -617,7 +815,52 @@ export default function InventarioTable({ items }: { items: Item[] }) {
           margin-top: 0.8rem;
           color: #4f6178;
         }
+        .pagination-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 0.9rem;
+          gap: 1rem;
+        }
+        .pagination-meta {
+          display: flex;
+          gap: 1rem;
+          color: #4f6178;
+        }
+        .pagination-controls {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+        }
+        .pagination-controls label {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          margin-right: 0.2rem;
+        }
+        .pagination-controls .page-btn {
+          min-width: 2.1rem;
+          margin-right: 0;
+          padding: 0.35rem 0.55rem;
+        }
+        .pagination-controls .page-btn-active {
+          background: linear-gradient(180deg, #2563eb, #1d4ed8);
+          color: #fff;
+          border-color: #1d4ed8;
+        }
+        .pagination-dots {
+          color: #4f6178;
+          padding: 0 0.15rem;
+        }
         @media (max-width: 1180px) {
+          .filters-header-top {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          .filters-actions {
+            justify-content: flex-start;
+            flex-wrap: wrap;
+          }
           .filters-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
@@ -625,6 +868,10 @@ export default function InventarioTable({ items }: { items: Item[] }) {
         @media (max-width: 760px) {
           .filters-grid {
             grid-template-columns: 1fr;
+          }
+          .pagination-row {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
       `}</style>

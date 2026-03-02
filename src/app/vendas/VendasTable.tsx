@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "../lib/supabase/client";
 
 type SaleRow = {
@@ -17,11 +18,60 @@ type SaleRow = {
 
 type VendasTableProps = {
   sales: SaleRow[];
+  initialFilters: {
+    query: string;
+    category: string;
+    platform: string;
+    orderBy: string;
+  };
+  pagination: {
+    page: number;
+    pageSize: number;
+    totalCount: number;
+    totalPages: number;
+  };
 };
 
 const basePlatforms = ["vinted", "olx", "lolapop", "viagogo", "stubhub", "ebay", "cardmarket"];
 
-export default function VendasTable({ sales }: VendasTableProps) {
+function escapeCsvCell(value: string | number | null | undefined) {
+  const normalized = String(value ?? "").replace(/"/g, '""');
+  return `"${normalized}"`;
+}
+
+function toCsv(rows: Array<Array<string | number | null | undefined>>) {
+  return rows.map((row) => row.map((value) => escapeCsvCell(value)).join(";")).join("\n");
+}
+
+function getVisiblePages(currentPage: number, totalPages: number): Array<number | "dots-left" | "dots-right"> {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages: Array<number | "dots-left" | "dots-right"> = [1];
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  if (start > 2) {
+    pages.push("dots-left");
+  }
+
+  for (let page = start; page <= end; page += 1) {
+    pages.push(page);
+  }
+
+  if (end < totalPages - 1) {
+    pages.push("dots-right");
+  }
+
+  pages.push(totalPages);
+  return pages;
+}
+
+export default function VendasTable({ sales, initialFilters, pagination }: VendasTableProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [localSales, setLocalSales] = useState(sales);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [savingId, setSavingId] = useState<string | null>(null);
@@ -41,12 +91,12 @@ export default function VendasTable({ sales }: VendasTableProps) {
       query: "",
       category: "all",
       platform: "all",
+      orderBy: "sold_at_desc",
     }),
     []
   );
 
-  const [draftFilters, setDraftFilters] = useState(defaultFilters);
-  const [appliedFilters, setAppliedFilters] = useState(defaultFilters);
+  const [draftFilters, setDraftFilters] = useState(initialFilters);
 
   const categories = useMemo(() => {
     const uniqueCategories = new Set(
@@ -70,23 +120,65 @@ export default function VendasTable({ sales }: VendasTableProps) {
     return Array.from(uniquePlatforms).sort((a, b) => a.localeCompare(b, "pt"));
   }, [localSales]);
 
-  const filteredSales = useMemo(() => {
-    return localSales.filter((sale) => {
-      const normalizedQuery = appliedFilters.query.trim().toLowerCase();
+  const filteredSales = useMemo(() => localSales, [localSales]);
 
-      const categoryMatches =
-        appliedFilters.category === "all" || sale.type === appliedFilters.category;
-      const platformMatches =
-        appliedFilters.platform === "all" || sale.platform === appliedFilters.platform;
-      const queryMatches =
-        normalizedQuery.length === 0 ||
-        sale.title.toLowerCase().includes(normalizedQuery) ||
-        sale.type.toLowerCase().includes(normalizedQuery) ||
-        (sale.platform ?? "").toLowerCase().includes(normalizedQuery);
+  useEffect(() => {
+    setLocalSales(sales);
+  }, [sales]);
 
-      return categoryMatches && platformMatches && queryMatches;
+  useEffect(() => {
+    setDraftFilters(initialFilters);
+  }, [initialFilters]);
+
+  function navigateWithParams(updates: Record<string, string>) {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (!value) {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
     });
-  }, [localSales, appliedFilters]);
+
+    const next = params.toString();
+    router.push(next ? `${pathname}?${next}` : pathname);
+  }
+
+  function applyFilters() {
+    navigateWithParams({
+      query: draftFilters.query,
+      category: draftFilters.category,
+      platform: draftFilters.platform,
+      orderBy: draftFilters.orderBy,
+      page: "1",
+    });
+  }
+
+  function clearFilters() {
+    setDraftFilters(defaultFilters);
+    navigateWithParams({
+      query: "",
+      category: defaultFilters.category,
+      platform: defaultFilters.platform,
+      orderBy: defaultFilters.orderBy,
+      page: "1",
+    });
+  }
+
+  function goToPage(nextPage: number) {
+    const clamped = Math.min(Math.max(nextPage, 1), pagination.totalPages);
+    navigateWithParams({ page: String(clamped) });
+  }
+
+  function changePageSize(value: number) {
+    navigateWithParams({ pageSize: String(value), page: "1" });
+  }
+
+  const visiblePages = useMemo(
+    () => getVisiblePages(pagination.page, pagination.totalPages),
+    [pagination.page, pagination.totalPages]
+  );
 
   const totalProfit = useMemo(() => {
     return filteredSales.reduce((sum, sale) => {
@@ -208,14 +300,91 @@ export default function VendasTable({ sales }: VendasTableProps) {
     }
   }
 
+  function exportFilteredSalesCsv() {
+    const header = [
+      "ID",
+      "Produto",
+      "Categoria",
+      "Plataforma",
+      "Data venda",
+      "Quantidade",
+      "Preço venda unitário",
+      "Custo compra unitário",
+      "Frete unitário",
+      "Lucro por produto",
+      "Lucro total",
+    ];
+
+    const rows = filteredSales.map((sale) => {
+      const soldPricePerProduct = Number(sale.sold_price ?? 0);
+      const soldQuantity = Number(sale.sold_quantity ?? 0);
+      const buyPricePerProduct = Number(sale.buy_unit_cost ?? 0);
+      const fretePerProduct = Number(sale.fees ?? 0);
+      const profitPerProduct = soldPricePerProduct - buyPricePerProduct;
+      const profitTotal = profitPerProduct * soldQuantity;
+
+      return [
+        sale.id,
+        sale.title,
+        sale.type,
+        sale.platform ?? "-",
+        sale.sold_at,
+        soldQuantity,
+        soldPricePerProduct.toFixed(2),
+        buyPricePerProduct.toFixed(2),
+        fretePerProduct.toFixed(2),
+        profitPerProduct.toFixed(2),
+        profitTotal.toFixed(2),
+      ];
+    });
+
+    const csv = toCsv([header, ...rows]);
+    const blob = new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const dateTag = new Date().toISOString().slice(0, 10);
+
+    link.href = url;
+    link.setAttribute("download", `vendas_${dateTag}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="vendas-container">
       <h2>Vendas</h2>
 
       <section className="filters-card">
         <div className="filters-header">
-          <h3>Filtros</h3>
-          <p>Refina por pesquisa, categoria e plataforma</p>
+          <div className="filters-header-top">
+            <div>
+              <h3>Filtros</h3>
+              <p>Refina por pesquisa, categoria, plataforma e ordenação</p>
+            </div>
+
+            <div className="filters-actions">
+              <button type="button" className="apply-btn" onClick={applyFilters}>
+                Aplicar
+              </button>
+              <button
+                type="button"
+                className="clear-btn"
+                onClick={clearFilters}
+              >
+                Limpar
+              </button>
+              <button
+                type="button"
+                className="export-btn"
+                onClick={exportFilteredSalesCsv}
+                disabled={filteredSales.length === 0}
+              >
+                Exportar CSV
+              </button>
+            </div>
+          </div>
         </div>
 
         <div className="filters-grid">
@@ -264,21 +433,22 @@ export default function VendasTable({ sales }: VendasTableProps) {
             </select>
           </label>
 
-          <div className="filters-actions">
-            <button type="button" className="apply-btn" onClick={() => setAppliedFilters(draftFilters)}>
-              Aplicar
-            </button>
-            <button
-              type="button"
-              className="clear-btn"
-              onClick={() => {
-                setDraftFilters(defaultFilters);
-                setAppliedFilters(defaultFilters);
-              }}
+          <label>
+            Ordenar por
+            <select
+              value={draftFilters.orderBy}
+              onChange={(event) =>
+                setDraftFilters((previous) => ({ ...previous, orderBy: event.target.value }))
+              }
             >
-              Limpar
-            </button>
-          </div>
+              <option value="sold_at_desc">Data de venda (desc)</option>
+              <option value="sold_at_asc">Data de venda (asc)</option>
+              <option value="price_desc">Preço venda (desc)</option>
+              <option value="price_asc">Preço venda (asc)</option>
+              <option value="quantity_desc">Qtd (desc)</option>
+              <option value="quantity_asc">Qtd (asc)</option>
+            </select>
+          </label>
         </div>
       </section>
 
@@ -440,6 +610,56 @@ export default function VendasTable({ sales }: VendasTableProps) {
 
       {filteredSales.length === 0 && <p className="empty">Sem vendas para os filtros selecionados.</p>}
 
+      <div className="pagination-row">
+        <div className="pagination-meta">
+          <span>Total: {pagination.totalCount}</span>
+          <span>Página {pagination.page} de {pagination.totalPages}</span>
+        </div>
+
+        <div className="pagination-controls">
+          <label>
+            Por página
+            <select
+              value={String(pagination.pageSize)}
+              onChange={(event) => changePageSize(Number(event.target.value))}
+            >
+              <option value="25">25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+
+          <button type="button" onClick={() => goToPage(pagination.page - 1)} disabled={pagination.page <= 1}>
+            Anterior
+          </button>
+
+          {visiblePages.map((value) => {
+            if (typeof value !== "number") {
+              return <span key={value} className="pagination-dots">...</span>;
+            }
+
+            return (
+              <button
+                key={value}
+                type="button"
+                className={value === pagination.page ? "page-btn page-btn-active" : "page-btn"}
+                onClick={() => goToPage(value)}
+              >
+                {value}
+              </button>
+            );
+          })}
+
+          <button
+            type="button"
+            onClick={() => goToPage(pagination.page + 1)}
+            disabled={pagination.page >= pagination.totalPages}
+          >
+            Seguinte
+          </button>
+        </div>
+      </div>
+
       <style jsx>{`
         .vendas-container {
           padding: 2rem;
@@ -457,6 +677,13 @@ export default function VendasTable({ sales }: VendasTableProps) {
         .filters-header {
           padding: 1rem 1rem 0.75rem;
           border-bottom: 1px solid #eaf1ff;
+        }
+
+        .filters-header-top {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 1rem;
         }
 
         .filters-header h3 {
@@ -534,6 +761,22 @@ export default function VendasTable({ sales }: VendasTableProps) {
           cursor: pointer;
         }
         .filters-actions .clear-btn:hover { background: #e0ecff; }
+
+        .filters-actions .export-btn {
+          background: #ffffff;
+          border: 1px solid #cfe0ff;
+          color: #123264;
+          padding: 0.42rem 0.62rem;
+          border-radius: 0.55rem;
+          cursor: pointer;
+        }
+        .filters-actions .export-btn:hover {
+          background: #f4f8ff;
+        }
+        .filters-actions .export-btn:disabled {
+          opacity: 0.55;
+          cursor: not-allowed;
+        }
 
         .profit-box {
           display: inline-flex;
@@ -658,7 +901,61 @@ export default function VendasTable({ sales }: VendasTableProps) {
           color: #4f6178;
         }
 
+        .pagination-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 0.9rem;
+          gap: 1rem;
+        }
+
+        .pagination-meta {
+          display: flex;
+          gap: 1rem;
+          color: #4f6178;
+        }
+
+        .pagination-controls {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+        }
+
+        .pagination-controls label {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          margin-right: 0.2rem;
+        }
+
+        .pagination-controls .page-btn {
+          min-width: 2.1rem;
+          margin-right: 0;
+          padding: 0.35rem 0.55rem;
+        }
+
+        .pagination-controls .page-btn-active {
+          background: linear-gradient(180deg, #2563eb, #1d4ed8);
+          color: #fff;
+          border-color: #1d4ed8;
+        }
+
+        .pagination-dots {
+          color: #4f6178;
+          padding: 0 0.15rem;
+        }
+
         @media (max-width: 1180px) {
+          .filters-header-top {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .filters-actions {
+            justify-content: flex-start;
+            flex-wrap: wrap;
+          }
+
           .filters-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
           }
@@ -667,6 +964,11 @@ export default function VendasTable({ sales }: VendasTableProps) {
         @media (max-width: 760px) {
           .filters-grid {
             grid-template-columns: 1fr;
+          }
+
+          .pagination-row {
+            flex-direction: column;
+            align-items: flex-start;
           }
         }
       `}</style>
