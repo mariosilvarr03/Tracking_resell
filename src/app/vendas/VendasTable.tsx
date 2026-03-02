@@ -466,11 +466,11 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
             <th>Categoria</th>
             <th>Plataforma</th>
             <th>Qtd</th>
-            <th>Data venda</th>
-            <th>Preço venda produto</th>
-            <th>Frete</th>
-            <th>Lucro por produto</th>
-            <th>Lucro total</th>
+            <th className="col-nowrap">Data venda</th>
+            <th className="col-nowrap">Preço venda produto</th>
+            <th className="col-nowrap">Frete</th>
+            <th className="col-nowrap">Lucro por produto</th>
+            <th className="col-nowrap">Lucro total</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -520,7 +520,7 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
                     sale.sold_quantity
                   )}
                 </td>
-                <td>
+                <td className="col-nowrap">
                   {isEditing ? (
                     <input
                       type="date"
@@ -533,7 +533,7 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
                     sale.sold_at
                   )}
                 </td>
-                <td>
+                <td className="col-nowrap">
                   {isEditing ? (
                     <input
                       type="number"
@@ -548,7 +548,7 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
                     <>€ {soldPricePerProduct.toFixed(2)}</>
                   )}
                 </td>
-                <td>
+                <td className="col-nowrap">
                   {isEditing ? (
                     <input
                       type="number"
@@ -563,8 +563,8 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
                     <>€ {fretePerProduct.toFixed(2)}</>
                   )}
                 </td>
-                <td>€ {profitPerProduct.toFixed(2)}</td>
-                <td>€ {profitTotal.toFixed(2)}</td>
+                <td className="col-nowrap">€ {profitPerProduct.toFixed(2)}</td>
+                <td className="col-nowrap">€ {profitTotal.toFixed(2)}</td>
                 <td>
                   {isEditing ? (
                     <>
@@ -804,7 +804,10 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
         .vendas-table td {
           padding: 0.7rem;
           border-bottom: 1px solid #e9f0ff;
-          text-align: left;
+          text-align: center;
+        }
+        .vendas-table .col-nowrap {
+          white-space: nowrap;
         }
         .vendas-table tbody tr:hover {
           background: #f3f7ff;

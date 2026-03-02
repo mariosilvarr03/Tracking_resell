@@ -136,6 +136,37 @@ export default async function DashboardGlobalPage() {
   const profitMargin = vendasTotal > 0 ? (lucroTotal / vendasTotal) * 100 : 0;
   const roi = comprasTotal > 0 ? (lucroTotal / comprasTotal) * 100 : 0;
 
+  const totalBoughtUnits = items.reduce((sum, item) => sum + Number(item.quantity ?? 0), 0);
+  const totalSoldUnits = items.reduce((sum, item) => sum + Number(item.sold_quantity_total ?? 0), 0);
+  const sellThroughRate = totalBoughtUnits > 0 ? (totalSoldUnits / totalBoughtUnits) * 100 : 0;
+
+  const totalSalesCount = salesBase.length;
+  const averageTicket = totalSalesCount > 0 ? vendasTotal / totalSalesCount : 0;
+
+  const averageDaysToSale = (() => {
+    let weightedDaysSum = 0;
+    let weightedUnits = 0;
+
+    sales.forEach((sale) => {
+      const buyDate = new Date(sale.buy_date);
+      const soldDate = new Date(sale.sold_at);
+      const quantity = Number(sale.sold_quantity ?? 0);
+
+      if (!Number.isFinite(quantity) || quantity <= 0) return;
+      if (Number.isNaN(buyDate.getTime()) || Number.isNaN(soldDate.getTime())) return;
+
+      const diffDays = Math.max(
+        0,
+        Math.floor((soldDate.getTime() - buyDate.getTime()) / (1000 * 60 * 60 * 24))
+      );
+
+      weightedDaysSum += diffDays * quantity;
+      weightedUnits += quantity;
+    });
+
+    return weightedUnits > 0 ? weightedDaysSum / weightedUnits : 0;
+  })();
+
   const lucroPorPlataforma = Object.entries(
     sales.reduce<Record<string, number>>((acc, sale) => {
       const platform = sale.platform ?? "-";
@@ -235,6 +266,18 @@ export default async function DashboardGlobalPage() {
         <div className="metric-card"><span>Profit margin</span><strong>{profitMargin.toFixed(1)}%</strong></div>
         <div className="metric-card"><span>ROI (lucro/compras)</span><strong>{roi.toFixed(1)}%</strong></div>
         <div className="metric-card"><span>Capital preso</span><strong>{euro(capitalPreso)}</strong></div>
+        <div className="metric-card">
+          <span>Tempo médio venda</span>
+          <strong>{averageDaysToSale.toFixed(1)} dias</strong>
+        </div>
+        <div className="metric-card">
+          <span>Ticket médio</span>
+          <strong>{euro(averageTicket)}</strong>
+        </div>
+        <div className="metric-card">
+          <span>Sell-through rate</span>
+          <strong>{sellThroughRate.toFixed(1)}%</strong>
+        </div>
       </div>
 
       <div className="two-col">
@@ -323,6 +366,7 @@ export default async function DashboardGlobalPage() {
           </table>
         </section>
       </div>
+
     </div>
   );
 }

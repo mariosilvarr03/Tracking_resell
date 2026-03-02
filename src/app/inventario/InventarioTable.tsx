@@ -433,8 +433,8 @@ export default function InventarioTable({
             <th>Stock</th>
             <th>Status</th>
             <th>Preço produto</th>
-            <th>Preço total</th>
-            <th>Data de compra</th>
+            <th className="col-nowrap">Preço total</th>
+            <th className="col-nowrap">Data de compra</th>
             <th>Tempo de Hold</th>
             <th>Ações</th>
           </tr>
@@ -489,7 +489,7 @@ export default function InventarioTable({
                     <>€ {unitPrice.toFixed(2)}</>
                   )}
                 </td>
-                <td>€ {totalPrice.toFixed(2)}</td>
+                <td className="col-nowrap">€ {totalPrice.toFixed(2)}</td>
                 <td>
                   {isEditing ? (
                     <input
@@ -498,7 +498,7 @@ export default function InventarioTable({
                       onChange={(e) => setEditForm((previous) => ({ ...previous, buy_date: e.target.value }))}
                     />
                   ) : (
-                    item.buy_date
+                    <span className="col-nowrap">{item.buy_date}</span>
                   )}
                 </td>
                 <td>{getHoldDays(item.buy_date)} dias</td>
@@ -692,10 +692,13 @@ export default function InventarioTable({
         th, td {
           padding: 0.75rem;
           border-bottom: 1px solid #e9f0ff;
-          text-align: left;
+          text-align: center;
         }
         tbody tr:hover {
           background: #f3f7ff;
+        }
+        .inventario-table .col-nowrap {
+          white-space: nowrap;
         }
         .status-stock {
           background: #e7f7ee;
@@ -703,6 +706,7 @@ export default function InventarioTable({
           padding: 0.3em 0.8em;
           border-radius: 1em;
           font-weight: 500;
+          white-space: nowrap;
         }
         .status-vendido {
           background: #eef3fb;
@@ -710,6 +714,7 @@ export default function InventarioTable({
           padding: 0.3em 0.8em;
           border-radius: 1em;
           font-weight: 500;
+          white-space: nowrap;
         }
         .table-error {
           color: #b42318;
