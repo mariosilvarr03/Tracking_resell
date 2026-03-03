@@ -31,7 +31,7 @@ export async function Navbar() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="hidden items-center gap-2 md:flex">
           {user ? (
             <form action="/auth/logout" method="post">
               <button className="btn btn-ghost" type="submit">
@@ -44,6 +44,40 @@ export async function Navbar() {
             </Link>
           )}
         </div>
+
+        <details className="relative md:hidden">
+          <summary className="btn btn-ghost list-none cursor-pointer px-3 py-2">Menu</summary>
+          <div className="absolute right-0 z-20 mt-2 min-w-56 rounded-xl border border-blue-100 bg-white p-2 shadow-lg">
+            <nav className="grid gap-1">
+              <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" href="/dashboard/mensal">
+                Dashboard Mensal
+              </Link>
+              <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" href="/dashboard/anual">
+                Dashboard Anual
+              </Link>
+              <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" href="/dashboard/global">
+                Dashboard Global
+              </Link>
+              <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" href="/inventario">
+                Inventário
+              </Link>
+              <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" href="/vendas">
+                Vendas
+              </Link>
+              {user ? (
+                <form action="/auth/logout" method="post" className="pt-1">
+                  <button className="w-full rounded-lg border border-blue-100 px-3 py-2 text-left text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" type="submit">
+                    Sair
+                  </button>
+                </form>
+              ) : (
+                <Link className="rounded-lg px-3 py-2 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700" href="/login">
+                  Login
+                </Link>
+              )}
+            </nav>
+          </div>
+        </details>
       </div>
     </header>
   );
