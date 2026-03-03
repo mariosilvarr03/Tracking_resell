@@ -131,7 +131,13 @@ export default async function DashboardGlobalPage() {
     return stock > 0 ? sum + Number(item.buy_price) * stock : sum;
   }, 0);
 
-  const lucroTotal = vendasTotal - comprasTotal;
+  const lucroTotal = sales.reduce((sum, sale) => {
+    const soldQty = Number(sale.sold_quantity ?? 0);
+    const soldUnit = Number(sale.sold_price ?? 0);
+    const buyUnit = Number(sale.buy_unit_cost ?? 0);
+    const freteUnit = Number(sale.fees ?? 0);
+    return sum + (soldUnit - buyUnit - freteUnit) * soldQty;
+  }, 0);
 
   const profitMargin = vendasTotal > 0 ? (lucroTotal / vendasTotal) * 100 : 0;
   const roi = comprasTotal > 0 ? (lucroTotal / comprasTotal) * 100 : 0;
@@ -262,7 +268,7 @@ export default async function DashboardGlobalPage() {
       <div className="cards-grid cards-grid-6">
         <div className="metric-card"><span>Compras total</span><strong>{euro(comprasTotal)}</strong></div>
         <div className="metric-card"><span>Vendas total</span><strong>{euro(vendasTotal)}</strong></div>
-        <div className="metric-card"><span>Lucro total</span><strong>{euro(lucroTotal)}</strong></div>
+        <div className="metric-card"><span className="whitespace-nowrap">Lucro (incluindo taxas)</span><strong>{euro(lucroTotal)}</strong></div>
         <div className="metric-card"><span>Profit margin</span><strong>{profitMargin.toFixed(1)}%</strong></div>
         <div className="metric-card"><span>ROI (lucro/compras)</span><strong>{roi.toFixed(1)}%</strong></div>
         <div className="metric-card"><span>Capital preso</span><strong>{euro(capitalPreso)}</strong></div>

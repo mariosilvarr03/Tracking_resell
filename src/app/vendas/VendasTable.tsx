@@ -185,7 +185,8 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
       const soldPricePerProduct = Number(sale.sold_price ?? 0);
       const soldQuantity = Number(sale.sold_quantity ?? 0);
       const buyPricePerProduct = Number(sale.buy_unit_cost ?? 0);
-      const profitPerProduct = soldPricePerProduct - buyPricePerProduct;
+      const fretePerProduct = Number(sale.fees ?? 0);
+      const profitPerProduct = soldPricePerProduct - buyPricePerProduct - fretePerProduct;
       const profitTotalByRule = profitPerProduct * soldQuantity;
       return sum + profitTotalByRule;
     }, 0);
@@ -320,7 +321,7 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
       const soldQuantity = Number(sale.sold_quantity ?? 0);
       const buyPricePerProduct = Number(sale.buy_unit_cost ?? 0);
       const fretePerProduct = Number(sale.fees ?? 0);
-      const profitPerProduct = soldPricePerProduct - buyPricePerProduct;
+      const profitPerProduct = soldPricePerProduct - buyPricePerProduct - fretePerProduct;
       const profitTotal = profitPerProduct * soldQuantity;
 
       return [
@@ -481,7 +482,7 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
             const soldQuantity = isEditing ? Number(editForm.sold_quantity || 0) : Number(sale.sold_quantity ?? 0);
             const buyPricePerProduct = Number(sale.buy_unit_cost ?? 0);
             const fretePerProduct = isEditing ? Number(editForm.fees || 0) : Number(sale.fees ?? 0);
-            const profitPerProduct = soldPricePerProduct - buyPricePerProduct;
+            const profitPerProduct = soldPricePerProduct - buyPricePerProduct - fretePerProduct;
             const profitTotal = profitPerProduct * soldQuantity;
 
             return (
