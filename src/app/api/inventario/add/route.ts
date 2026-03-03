@@ -39,11 +39,28 @@ export async function POST(request: Request) {
     }
   );
 
+  const buyDate = String(body.buy_date ?? "").trim();
+  const buyDateValue = new Date(`${buyDate}T00:00:00Z`);
+  if (!buyDate || Number.isNaN(buyDateValue.getTime())) {
+    return NextResponse.json({ error: "Data de compra inválida" }, { status: 400 });
+  }
+
+  if (body.type === "BILHETES" && body.event_date) {
+    const eventDate = String(body.event_date).trim();
+    const eventDateValue = new Date(`${eventDate}T00:00:00Z`);
+    if (Number.isNaN(eventDateValue.getTime())) {
+      return NextResponse.json({ error: "Data do evento inválida" }, { status: 400 });
+    }
+    if (eventDateValue < buyDateValue) {
+      return NextResponse.json({ error: "Data do evento não pode ser anterior à data de compra" }, { status: 400 });
+    }
+  }
+
   const itemBase = {
     title: body.title,
     type: body.type,
     buy_price: Number(body.buy_price),
-    buy_date: body.buy_date,
+    buy_date: buyDate,
     quantity: Number(body.quantity),
     user_id: user.id,
     notes: "",

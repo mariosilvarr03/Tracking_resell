@@ -13,7 +13,7 @@ export default async function VenderItemPage({ params }: VenderPageProps) {
 
   const { data: item, error } = await supabase
     .from("items")
-    .select("id, title, quantity, sold_quantity_total")
+    .select("id, title, buy_date, quantity, sold_quantity_total")
     .eq("id", itemId)
     .single();
 
@@ -31,6 +31,7 @@ export default async function VenderItemPage({ params }: VenderPageProps) {
     <VendaFormClient
       itemId={item.id}
       itemTitle={item.title}
+      buyDate={item.buy_date}
       stockAvailable={stockAvailable}
     />
   );

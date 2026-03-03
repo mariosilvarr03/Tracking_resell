@@ -98,7 +98,7 @@ export async function PATCH(request: Request) {
 
   const { data: existingItem, error: itemError } = await supabase
     .from("items")
-    .select("id, user_id, quantity, sold_quantity_total")
+    .select("id, user_id, quantity, sold_quantity_total, buy_date")
     .eq("id", existingSale.item_id)
     .single();
 
@@ -118,6 +118,16 @@ export async function PATCH(request: Request) {
       { error: "Quantidade excede o stock disponível para esta edição" },
       { status: 400 }
     );
+  }
+
+  const soldDateValue = new Date(`${soldAt}T00:00:00Z`);
+  const buyDateValue = new Date(`${existingItem.buy_date}T00:00:00Z`);
+  if (Number.isNaN(soldDateValue.getTime()) || Number.isNaN(buyDateValue.getTime())) {
+    return NextResponse.json({ error: "Data inválida" }, { status: 400 });
+  }
+
+  if (soldDateValue < buyDateValue) {
+    return NextResponse.json({ error: "Data da venda não pode ser anterior à data de compra" }, { status: 400 });
   }
 
   const { data: platformRow, error: platformError } = await supabase

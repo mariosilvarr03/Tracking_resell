@@ -59,7 +59,7 @@ export default function NovaCompraPage() {
         return (
           <>
             <label>Evento: <input value={form.event_name} onChange={e => setForm(f => ({ ...f, event_name: e.target.value }))} /></label>
-            <label>Data do evento: <input type="date" value={form.event_date} onChange={e => setForm(f => ({ ...f, event_date: e.target.value }))} /></label>
+            <label>Data do evento: <input type="date" min={form.buy_date} value={form.event_date} onChange={e => setForm(f => ({ ...f, event_date: e.target.value }))} /></label>
             <label>Local: <input value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} /></label>
             <label>Lugar: <input value={form.seat_info} onChange={e => setForm(f => ({ ...f, seat_info: e.target.value }))} /></label>
           </>
@@ -160,7 +160,11 @@ export default function NovaCompraPage() {
           </select>
         </label>
         <label>Preço de compra: <input required type="number" min="0" step="0.01" value={form.buy_price} onChange={e => setForm(f => ({ ...f, buy_price: e.target.value }))} /></label>
-        <label>Data de compra: <input required type="date" value={form.buy_date} onChange={e => setForm(f => ({ ...f, buy_date: e.target.value }))} /></label>
+        <label>Data de compra: <input required type="date" value={form.buy_date} max={form.type === "BILHETES" && form.event_date ? form.event_date : undefined} onChange={e => setForm(f => {
+          const nextBuyDate = e.target.value;
+          const shouldAdjustEventDate = f.type === "BILHETES" && f.event_date && f.event_date < nextBuyDate;
+          return { ...f, buy_date: nextBuyDate, event_date: shouldAdjustEventDate ? nextBuyDate : f.event_date };
+        })} /></label>
         <label>Quantidade: <input required type="number" min="1" value={form.quantity} onChange={e => setForm(f => ({ ...f, quantity: Number(e.target.value) }))} /></label>
         <div className="category-fields">{renderExtraFields()}</div>
         {error && <div className="error">{error}</div>}

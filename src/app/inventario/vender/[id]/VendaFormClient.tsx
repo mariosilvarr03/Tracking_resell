@@ -7,6 +7,7 @@ import { supabaseBrowser } from "../../../lib/supabase/client";
 type VendaFormProps = {
   itemId: string;
   itemTitle: string;
+  buyDate: string;
   stockAvailable: number;
 };
 
@@ -20,7 +21,7 @@ const platformOptions = [
   "cardmarket",
 ] as const;
 
-export default function VendaFormClient({ itemId, itemTitle, stockAvailable }: VendaFormProps) {
+export default function VendaFormClient({ itemId, itemTitle, buyDate, stockAvailable }: VendaFormProps) {
   const router = useRouter();
   const [soldQuantity, setSoldQuantity] = useState(1);
   const [soldPriceUnit, setSoldPriceUnit] = useState("");
@@ -144,6 +145,7 @@ export default function VendaFormClient({ itemId, itemTitle, stockAvailable }: V
           Data da venda
           <input
             type="date"
+            min={buyDate}
             value={soldAt}
             onChange={(event) => setSoldAt(event.target.value)}
             required
