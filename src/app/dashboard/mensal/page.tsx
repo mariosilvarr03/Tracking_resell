@@ -67,15 +67,24 @@ export default async function DashboardMensalPage({
   const monthEnd = `${nextMonth}-01`;
 
   const supabase = await supabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return <div>Sessão inválida. Faz login novamente.</div>;
+  }
 
   const [{ data: itemsData, error: itemsError }, { data: salesData, error: salesError }] = await Promise.all([
     supabase
       .from("items")
       .select("id, title, type, buy_date, buy_price, quantity, sold_quantity_total, status")
+      .eq("user_id", user.id)
       .order("buy_date", { ascending: false }),
     supabase
       .from("v_sales_enriched")
       .select("id, title, type, platform, buy_date, buy_unit_cost, sold_at, sold_quantity, sold_price, fees")
+      .eq("user_id", user.id)
       .gte("sold_at", monthStart)
       .lt("sold_at", monthEnd)
       .order("sold_at", { ascending: false }),
