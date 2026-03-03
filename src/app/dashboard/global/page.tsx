@@ -131,7 +131,7 @@ export default async function DashboardGlobalPage() {
     return stock > 0 ? sum + Number(item.buy_price) * stock : sum;
   }, 0);
 
-  const lucroTotal = vendasTotal - comprasTotal - capitalPreso;
+  const lucroTotal = vendasTotal - comprasTotal;
 
   const profitMargin = vendasTotal > 0 ? (lucroTotal / vendasTotal) * 100 : 0;
   const roi = comprasTotal > 0 ? (lucroTotal / comprasTotal) * 100 : 0;
