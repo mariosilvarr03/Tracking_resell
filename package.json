@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:test-data": "node scripts/seed-test-data.mjs",
+    "seed:cleanup": "node scripts/cleanup-test-data.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.8.0",

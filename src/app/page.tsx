@@ -40,6 +40,10 @@ export default function Home() {
             <li>
               <strong>Tomar decisões:</strong> usa lucro, margem e tempo de hold para otimizar compras futuras.
             </li>
+            <li>
+              <strong>Importar CSV (beta):</strong> no <span className="font-semibold">Inventário</span>, carrega o ficheiro,
+              valida o preview e clica em importar linhas válidas.
+            </li>
           </ol>
         </div>
       </section>

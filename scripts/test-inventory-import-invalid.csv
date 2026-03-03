@@ -1,0 +1,8 @@
+title;type;buy_price;buy_date;quantity;size;brand;condition;size_eu;model;event_name;event_date;location;seat_info;game;set_name;card_name;grade;language;extra
+;ROUPA;39.90;2026-02-10;2;L;Nike;Usado;;;;;;;;;;
+Produto Tipo Invalido;ELETRONICA;100.00;2026-02-10;1;;;;;;;;;;;;;;;;;
+Preco Negativo;CARTAS;-10.00;2026-02-05;1;;;;;;;;;;;Pokemon;Base Set;Pikachu;;EN;
+Data Invalida;SAPATILHAS;120.00;2026-13-40;1;;;Novo;42;Dunk Low;;;;;;;;;
+Quantidade Zero;RANDOM;55.00;2026-02-22;0;;;;;;;;;;;;;;;;;"{""source"":""raffle""}"
+Bilhete Data Invertida;BILHETES;65.00;2026-03-20;2;;;;;;Benfica vs Porto;2026-03-01;Lisboa;B12;;;;;;;
+Random Json Invalido;RANDOM;50.00;2026-02-12;1;;;;;;;;;;;;;;;;;"{invalid-json}"

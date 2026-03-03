@@ -2,6 +2,12 @@
 import React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { supabaseBrowser } from "../lib/supabase/client";
+import {
+  INVENTORY_ALLOWED_TYPES,
+  type InventoryCsvCanonicalHeader,
+  INVENTORY_CSV_TEMPLATE_HEADERS,
+  mapInventoryCsvHeaders,
+} from "../lib/imports/inventoryCsvSpec";
 
 // Helper para calcular dias de hold
 function getHoldDays(buyDate: string) {
@@ -34,6 +40,23 @@ type PaginationMeta = {
   totalCount: number;
   totalPages: number;
 };
+
+type CsvPreviewState = {
+  rawHeaders: string[];
+  sampleRows: string[][];
+  mappedRows: Array<Partial<Record<InventoryCsvCanonicalHeader, string>>>;
+  totalRows: number;
+  unknownHeaders: string[];
+  missingRequired: string[];
+  validRows: number;
+  invalidRows: number;
+  rowErrors: Array<{
+    rowNumber: number;
+    messages: string[];
+  }>;
+};
+
+const ALLOWED_ITEM_TYPES = new Set(INVENTORY_ALLOWED_TYPES);
 
 function escapeCsvCell(value: string | number | null | undefined) {
   const normalized = String(value ?? "").replace(/"/g, '""');
@@ -69,6 +92,148 @@ function getVisiblePages(currentPage: number, totalPages: number): Array<number 
   return pages;
 }
 
+function parseCsvLine(line: string, delimiter: string) {
+  const cells: string[] = [];
+  let current = "";
+  let inQuotes = false;
+
+  for (let index = 0; index < line.length; index += 1) {
+    const char = line[index];
+    const nextChar = line[index + 1];
+
+    if (char === "\"") {
+      if (inQuotes && nextChar === "\"") {
+        current += "\"";
+        index += 1;
+      } else {
+        inQuotes = !inQuotes;
+      }
+      continue;
+    }
+
+    if (char === delimiter && !inQuotes) {
+      cells.push(current.trim());
+      current = "";
+      continue;
+    }
+
+    current += char;
+  }
+
+  cells.push(current.trim());
+  return cells;
+}
+
+function parseDecimal(value: string) {
+  return Number(value.replace(",", "."));
+}
+
+function parseDateOnly(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return null;
+  const parsed = new Date(`${value}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed;
+}
+
+function parseCsvText(text: string): CsvPreviewState {
+  const lines = text
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
+  if (lines.length < 2) {
+    throw new Error("CSV inválido: inclui header e pelo menos 1 linha.");
+  }
+
+  const headerLine = lines[0];
+  const semicolonCount = (headerLine.match(/;/g) ?? []).length;
+  const commaCount = (headerLine.match(/,/g) ?? []).length;
+  const delimiter = semicolonCount >= commaCount ? ";" : ",";
+
+  const rawHeaders = parseCsvLine(headerLine, delimiter);
+  const parsedRows = lines.slice(1).map((line) => parseCsvLine(line, delimiter));
+
+  const mapped = mapInventoryCsvHeaders(rawHeaders);
+  const mappedRows: Array<Partial<Record<InventoryCsvCanonicalHeader, string>>> = parsedRows.map((row) => {
+    const mappedRow: Partial<Record<InventoryCsvCanonicalHeader, string>> = {};
+    mapped.canonicalByIndex.forEach((canonicalHeader, cellIndex) => {
+      if (!canonicalHeader) return;
+      mappedRow[canonicalHeader] = String(row[cellIndex] ?? "").trim();
+    });
+    return mappedRow;
+  });
+  const rowErrors: CsvPreviewState["rowErrors"] = [];
+
+  mappedRows.forEach((values, rowIndex) => {
+    const rowNumber = rowIndex + 2;
+
+    const messages: string[] = [];
+    const title = values.title ?? "";
+    const typeRaw = (values.type ?? "").toUpperCase();
+    const buyPriceRaw = values.buy_price ?? "";
+    const buyDateRaw = values.buy_date ?? "";
+    const quantityRaw = values.quantity ?? "";
+    const eventDateRaw = values.event_date ?? "";
+
+    if (!title) messages.push("title em falta");
+    if (!typeRaw) {
+      messages.push("type em falta");
+    } else if (!ALLOWED_ITEM_TYPES.has(typeRaw)) {
+      messages.push(`type inválido (${typeRaw})`);
+    }
+
+    const buyPrice = parseDecimal(buyPriceRaw);
+    if (!buyPriceRaw) {
+      messages.push("buy_price em falta");
+    } else if (!Number.isFinite(buyPrice) || buyPrice < 0) {
+      messages.push("buy_price inválido");
+    }
+
+    const quantity = Number(quantityRaw);
+    if (!quantityRaw) {
+      messages.push("quantity em falta");
+    } else if (!Number.isInteger(quantity) || quantity < 1) {
+      messages.push("quantity inválida");
+    }
+
+    const buyDate = parseDateOnly(buyDateRaw);
+    if (!buyDateRaw) {
+      messages.push("buy_date em falta");
+    } else if (!buyDate) {
+      messages.push("buy_date inválida (formato YYYY-MM-DD)");
+    }
+
+    if (eventDateRaw) {
+      const eventDate = parseDateOnly(eventDateRaw);
+      if (!eventDate) {
+        messages.push("event_date inválida (formato YYYY-MM-DD)");
+      } else if (typeRaw === "BILHETES" && buyDate && eventDate < buyDate) {
+        messages.push("event_date não pode ser anterior a buy_date");
+      }
+    }
+
+    if (messages.length > 0) {
+      rowErrors.push({ rowNumber, messages });
+    }
+  });
+
+  const invalidRows = mapped.missingRequired.length > 0 ? parsedRows.length : rowErrors.length;
+  const validRows = Math.max(0, parsedRows.length - invalidRows);
+
+  return {
+    rawHeaders,
+    sampleRows: parsedRows.slice(0, 10),
+    mappedRows,
+    totalRows: parsedRows.length,
+    unknownHeaders: mapped.unknownHeaders,
+    missingRequired: mapped.missingRequired,
+    validRows,
+    invalidRows,
+    rowErrors,
+  };
+}
+
 export default function InventarioTable({
   items,
   initialFilters,
@@ -86,6 +251,10 @@ export default function InventarioTable({
   const [savingId, setSavingId] = React.useState<string | null>(null);
   const [deletingId, setDeletingId] = React.useState<string | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+  const [importError, setImportError] = React.useState<string | null>(null);
+  const [importSuccess, setImportSuccess] = React.useState<string | null>(null);
+  const [importing, setImporting] = React.useState(false);
+  const [csvPreview, setCsvPreview] = React.useState<CsvPreviewState | null>(null);
 
   const defaultFilters = React.useMemo(
     () => ({
@@ -270,6 +439,75 @@ export default function InventarioTable({
     }
   }
 
+  async function onImportCsvSelected(event: React.ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    setImportError(null);
+    setImportSuccess(null);
+    setCsvPreview(null);
+
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const parsed = parseCsvText(text);
+      setCsvPreview(parsed);
+    } catch {
+      setImportError("Não foi possível ler o CSV. Verifica formato e headers.");
+    } finally {
+      event.target.value = "";
+    }
+  }
+
+  async function importCsvRows() {
+    setImportError(null);
+    setImportSuccess(null);
+
+    if (!csvPreview) {
+      setImportError("Seleciona um CSV antes de importar.");
+      return;
+    }
+
+    if (csvPreview.invalidRows > 0 || csvPreview.missingRequired.length > 0) {
+      setImportError("Corrige os erros do CSV antes de importar.");
+      return;
+    }
+
+    setImporting(true);
+    try {
+      const token = await getAccessToken();
+      if (!token) {
+        setImportError("Tens de fazer login para importar.");
+        return;
+      }
+
+      const res = await fetch("/api/inventario/import", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          validateOnly: false,
+          rows: csvPreview.mappedRows,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setImportError(data?.error || "Erro ao importar CSV.");
+        return;
+      }
+
+      setImportSuccess(`Import concluído: ${data?.summary?.insertedItems ?? 0} items inseridos.`);
+      setCsvPreview(null);
+      router.refresh();
+    } catch {
+      setImportError("Erro de rede ao importar CSV.");
+    } finally {
+      setImporting(false);
+    }
+  }
+
   function exportVisibleItemsCsv() {
     const header = [
       "ID",
@@ -327,6 +565,78 @@ export default function InventarioTable({
       <h2>Inventário</h2>
       <button className="add-btn" onClick={() => router.push("/inventario/nova-compra")}>Nova compra</button>
       {error && <p className="table-error">{error}</p>}
+      <section className="import-card">
+        <h3>Importar CSV (preview)</h3>
+        <p>Usa headers do template oficial; aliases são aceites automaticamente.</p>
+        <input type="file" accept=".csv,text/csv" onChange={onImportCsvSelected} />
+        <p className="import-template">Template: {INVENTORY_CSV_TEMPLATE_HEADERS.join(", ")}</p>
+        {importError && <p className="table-error">{importError}</p>}
+        {importSuccess && <p className="import-success">{importSuccess}</p>}
+        {csvPreview && (
+          <div className="import-preview">
+            <p>
+              Linhas lidas: <strong>{csvPreview.totalRows}</strong>
+            </p>
+            <p>
+              Válidas: <strong>{csvPreview.validRows}</strong> | Inválidas: <strong>{csvPreview.invalidRows}</strong>
+            </p>
+            {csvPreview.missingRequired.length > 0 && (
+              <p className="table-error">Headers obrigatórios em falta: {csvPreview.missingRequired.join(", ")}</p>
+            )}
+            {csvPreview.unknownHeaders.length > 0 && (
+              <p className="import-warn">Headers não reconhecidos: {csvPreview.unknownHeaders.join(", ")}</p>
+            )}
+            {csvPreview.rowErrors.length > 0 && (
+              <div className="import-errors">
+                <p>Erros por linha (preview):</p>
+                <ul>
+                  {csvPreview.rowErrors.slice(0, 12).map((rowError) => (
+                    <li key={`csv-error-${rowError.rowNumber}`}>
+                      Linha {rowError.rowNumber}: {rowError.messages.join("; ")}
+                    </li>
+                  ))}
+                </ul>
+                {csvPreview.rowErrors.length > 12 && (
+                  <p className="import-muted">
+                    A mostrar 12 de {csvPreview.rowErrors.length} linhas com erro.
+                  </p>
+                )}
+              </div>
+            )}
+            <div className="table-scroll">
+              <table className="inventario-table">
+                <thead>
+                  <tr>
+                    {csvPreview.rawHeaders.map((header, headerIndex) => (
+                      <th key={`csv-header-${headerIndex}`}>{header}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {csvPreview.sampleRows.map((row, rowIndex) => (
+                    <tr key={`csv-row-${rowIndex}`}>
+                      {csvPreview.rawHeaders.map((_, cellIndex) => (
+                        <td key={`csv-cell-${rowIndex}-${cellIndex}`}>{row[cellIndex] ?? ""}</td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {csvPreview.totalRows > csvPreview.sampleRows.length && (
+              <p className="import-muted">A mostrar apenas as primeiras {csvPreview.sampleRows.length} linhas.</p>
+            )}
+            <button
+              type="button"
+              className="import-btn"
+              disabled={importing || csvPreview.invalidRows > 0 || csvPreview.missingRequired.length > 0}
+              onClick={importCsvRows}
+            >
+              {importing ? "A importar..." : `Importar ${csvPreview.validRows} linhas válidas`}
+            </button>
+          </div>
+        )}
+      </section>
 
       <section className="filters-card">
         <div className="filters-header">
@@ -621,6 +931,70 @@ export default function InventarioTable({
           overflow: hidden;
           background: linear-gradient(180deg, #ffffff, #f6f9ff);
           box-shadow: 0 10px 28px rgba(29, 78, 216, 0.08);
+        }
+        .import-card {
+          border: 1px solid #dbe7fb;
+          border-radius: 1rem;
+          margin: 0 0 1.25rem;
+          padding: 1rem;
+          background: linear-gradient(180deg, #ffffff, #f6f9ff);
+          box-shadow: 0 10px 28px rgba(29, 78, 216, 0.08);
+        }
+        .import-card h3 {
+          margin: 0 0 0.4rem;
+        }
+        .import-card p {
+          margin: 0.2rem 0 0.8rem;
+          color: #4f6178;
+        }
+        .import-template {
+          font-size: 0.85rem;
+          word-break: break-word;
+        }
+        .import-preview {
+          margin-top: 0.8rem;
+        }
+        .import-warn {
+          color: #8a5500;
+        }
+        .import-muted {
+          margin-top: 0.5rem;
+          font-size: 0.85rem;
+          color: #4f6178;
+        }
+        .import-success {
+          color: #14653b;
+          font-weight: 600;
+        }
+        .import-btn {
+          margin-top: 0.7rem;
+          background: linear-gradient(180deg, #2563eb, #1d4ed8);
+          color: #fff;
+          border: 1px solid #1d4ed8;
+          box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+        }
+        .import-btn:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          box-shadow: none;
+        }
+        .import-errors {
+          margin: 0.65rem 0;
+          border: 1px solid #f3d3d0;
+          background: #fff7f7;
+          border-radius: 0.6rem;
+          padding: 0.55rem 0.7rem;
+        }
+        .import-errors p {
+          margin: 0 0 0.35rem;
+          color: #7a271a;
+          font-weight: 600;
+        }
+        .import-errors ul {
+          margin: 0;
+          padding-left: 1.1rem;
+          color: #7a271a;
+          font-size: 0.9rem;
         }
         .filters-header {
           padding: 1rem 1rem 0.75rem;
