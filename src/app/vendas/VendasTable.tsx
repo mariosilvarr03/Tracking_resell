@@ -460,23 +460,24 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
 
       {error && <p className="table-error">{error}</p>}
 
-      <table className="vendas-table">
-        <thead>
-          <tr>
-            <th>Produto</th>
-            <th>Categoria</th>
-            <th>Plataforma</th>
-            <th>Qtd</th>
-            <th className="col-nowrap">Data venda</th>
-            <th className="col-nowrap">Preço venda produto</th>
-            <th className="col-nowrap">Frete</th>
-            <th className="col-nowrap">Lucro por produto</th>
-            <th className="col-nowrap">Lucro total</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredSales.map((sale) => {
+      <div className="table-scroll">
+        <table className="vendas-table">
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Categoria</th>
+              <th>Plataforma</th>
+              <th>Qtd</th>
+              <th className="col-nowrap">Data venda</th>
+              <th className="col-nowrap">Preço venda produto</th>
+              <th className="col-nowrap">Frete</th>
+              <th className="col-nowrap">Lucro por produto</th>
+              <th className="col-nowrap">Lucro total</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredSales.map((sale) => {
             const isEditing = editingId === sale.id;
             const soldPricePerProduct = isEditing ? Number(editForm.sold_price || 0) : Number(sale.sold_price ?? 0);
             const soldQuantity = isEditing ? Number(editForm.sold_quantity || 0) : Number(sale.sold_quantity ?? 0);
@@ -605,9 +606,10 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
                 </td>
               </tr>
             );
-          })}
-        </tbody>
-      </table>
+            })}
+          </tbody>
+        </table>
+      </div>
 
       {filteredSales.length === 0 && <p className="empty">Sem vendas para os filtros selecionados.</p>}
 
@@ -798,7 +800,13 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
 
         .vendas-table {
           width: 100%;
+          min-width: 1020px;
           border-collapse: collapse;
+        }
+        .table-scroll {
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
         }
 
         .vendas-table th,
@@ -966,6 +974,9 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
         }
 
         @media (max-width: 760px) {
+          .vendas-container {
+            padding: 1rem;
+          }
           .filters-grid {
             grid-template-columns: 1fr;
           }
@@ -973,6 +984,9 @@ export default function VendasTable({ sales, initialFilters, pagination }: Venda
           .pagination-row {
             flex-direction: column;
             align-items: flex-start;
+          }
+          .pagination-controls {
+            flex-wrap: wrap;
           }
         }
       `}</style>

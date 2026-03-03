@@ -424,23 +424,24 @@ export default function InventarioTable({
         </div>
       </section>
 
-      <table className="inventario-table">
-        <thead>
-          <tr>
-            <th>Nome</th>
-            <th>Categoria</th>
-            <th>Quantidade</th>
-            <th>Stock</th>
-            <th>Status</th>
-            <th>Preço produto</th>
-            <th className="col-nowrap">Preço total</th>
-            <th className="col-nowrap">Data de compra</th>
-            <th>Tempo de Hold</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {visibleItems.map((item) => {
+      <div className="table-scroll">
+        <table className="inventario-table">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Categoria</th>
+              <th>Quantidade</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th>Preço produto</th>
+              <th className="col-nowrap">Preço total</th>
+              <th className="col-nowrap">Data de compra</th>
+              <th>Tempo de Hold</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            {visibleItems.map((item) => {
             const status = item.quantity > item.sold_quantity_total ? "EM STOCK" : "VENDIDO";
             const stock = item.quantity - item.sold_quantity_total;
             const isEditing = editingId === item.id;
@@ -552,9 +553,10 @@ export default function InventarioTable({
                 </td>
               </tr>
             );
-          })}
-        </tbody>
-      </table>
+            })}
+          </tbody>
+        </table>
+      </div>
 
       {visibleItems.length === 0 && <p className="empty-state">Sem itens para os filtros selecionados.</p>}
 
@@ -687,7 +689,13 @@ export default function InventarioTable({
         }
         .inventario-table {
           width: 100%;
+          min-width: 980px;
           border-collapse: collapse;
+        }
+        .table-scroll {
+          width: 100%;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
         }
         th, td {
           padding: 0.75rem;
@@ -871,12 +879,18 @@ export default function InventarioTable({
           }
         }
         @media (max-width: 760px) {
+          .inventario-container {
+            padding: 1rem;
+          }
           .filters-grid {
             grid-template-columns: 1fr;
           }
           .pagination-row {
             flex-direction: column;
             align-items: flex-start;
+          }
+          .pagination-controls {
+            flex-wrap: wrap;
           }
         }
       `}</style>
