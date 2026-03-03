@@ -1,0 +1,501 @@
+title;type;buy_price;buy_date;quantity;size;brand;condition;size_eu;model;event_name;event_date;location;seat_info;game;set_name;card_name;grade;language;extra
+Load Tee 0001;ROUPA;21.00;2026-02-02;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0002;SAPATILHAS;82.00;2026-02-03;1;;;Novo;42;Model 0002;;;;;;;;;
+Load Ticket 0003;BILHETES;38.00;2026-02-04;2;;;;;;Evento 0003;2026-03-04;Lisboa;A4;;;;;;
+Load Card 0004;CARTAS;19.00;2026-02-05;1;;;;;;;;;;;Pokemon;Base Set;Card 0004;;EN;
+Load Random 0005;RANDOM;15.00;2026-02-06;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0005""}"
+Load Tee 0006;ROUPA;26.00;2026-02-07;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0007;SAPATILHAS;87.00;2026-02-08;1;;;Novo;42;Model 0007;;;;;;;;;
+Load Ticket 0008;BILHETES;43.00;2026-02-09;2;;;;;;Evento 0008;2026-03-09;Lisboa;A9;;;;;;
+Load Card 0009;CARTAS;24.00;2026-02-10;1;;;;;;;;;;;Pokemon;Base Set;Card 0009;;EN;
+Load Random 0010;RANDOM;20.00;2026-02-11;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0010""}"
+Load Tee 0011;ROUPA;31.00;2026-02-12;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0012;SAPATILHAS;92.00;2026-02-13;1;;;Novo;42;Model 0012;;;;;;;;;
+Load Ticket 0013;BILHETES;48.00;2026-02-14;2;;;;;;Evento 0013;2026-03-14;Lisboa;A14;;;;;;
+Load Card 0014;CARTAS;29.00;2026-02-15;1;;;;;;;;;;;Pokemon;Base Set;Card 0014;;EN;
+Load Random 0015;RANDOM;25.00;2026-02-16;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0015""}"
+Load Tee 0016;ROUPA;24.00;2026-02-17;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0017;SAPATILHAS;97.00;2026-02-18;1;;;Novo;42;Model 0017;;;;;;;;;
+Load Ticket 0018;BILHETES;53.00;2026-02-19;2;;;;;;Evento 0018;2026-03-19;Lisboa;A19;;;;;;
+Load Card 0019;CARTAS;34.00;2026-02-20;1;;;;;;;;;;;Pokemon;Base Set;Card 0019;;EN;
+Load Random 0020;RANDOM;30.00;2026-02-21;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0020""}"
+Load Tee 0021;ROUPA;29.00;2026-02-22;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0022;SAPATILHAS;102.00;2026-02-23;1;;;Novo;42;Model 0022;;;;;;;;;
+Load Ticket 0023;BILHETES;58.00;2026-02-24;2;;;;;;Evento 0023;2026-03-24;Lisboa;A24;;;;;;
+Load Card 0024;CARTAS;39.00;2026-02-25;1;;;;;;;;;;;Pokemon;Base Set;Card 0024;;EN;
+Load Random 0025;RANDOM;35.00;2026-02-26;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0025""}"
+Load Tee 0026;ROUPA;22.00;2026-02-27;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0027;SAPATILHAS;107.00;2026-02-28;1;;;Novo;42;Model 0027;;;;;;;;;
+Load Ticket 0028;BILHETES;63.00;2026-02-01;2;;;;;;Evento 0028;2026-03-01;Lisboa;A29;;;;;;
+Load Card 0029;CARTAS;44.00;2026-02-02;1;;;;;;;;;;;Pokemon;Base Set;Card 0029;;EN;
+Load Random 0030;RANDOM;10.00;2026-02-03;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0030""}"
+Load Tee 0031;ROUPA;27.00;2026-02-04;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0032;SAPATILHAS;112.00;2026-02-05;1;;;Novo;42;Model 0032;;;;;;;;;
+Load Ticket 0033;BILHETES;68.00;2026-02-06;2;;;;;;Evento 0033;2026-03-06;Lisboa;A4;;;;;;
+Load Card 0034;CARTAS;49.00;2026-02-07;1;;;;;;;;;;;Pokemon;Base Set;Card 0034;;EN;
+Load Random 0035;RANDOM;15.00;2026-02-08;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0035""}"
+Load Tee 0036;ROUPA;20.00;2026-02-09;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0037;SAPATILHAS;117.00;2026-02-10;1;;;Novo;42;Model 0037;;;;;;;;;
+Load Ticket 0038;BILHETES;73.00;2026-02-11;2;;;;;;Evento 0038;2026-03-11;Lisboa;A9;;;;;;
+Load Card 0039;CARTAS;54.00;2026-02-12;1;;;;;;;;;;;Pokemon;Base Set;Card 0039;;EN;
+Load Random 0040;RANDOM;20.00;2026-02-13;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0040""}"
+Load Tee 0041;ROUPA;25.00;2026-02-14;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0042;SAPATILHAS;122.00;2026-02-15;1;;;Novo;42;Model 0042;;;;;;;;;
+Load Ticket 0043;BILHETES;78.00;2026-02-16;2;;;;;;Evento 0043;2026-03-16;Lisboa;A14;;;;;;
+Load Card 0044;CARTAS;59.00;2026-02-17;1;;;;;;;;;;;Pokemon;Base Set;Card 0044;;EN;
+Load Random 0045;RANDOM;25.00;2026-02-18;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0045""}"
+Load Tee 0046;ROUPA;30.00;2026-02-19;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0047;SAPATILHAS;127.00;2026-02-20;1;;;Novo;42;Model 0047;;;;;;;;;
+Load Ticket 0048;BILHETES;83.00;2026-02-21;2;;;;;;Evento 0048;2026-03-21;Lisboa;A19;;;;;;
+Load Card 0049;CARTAS;19.00;2026-02-22;1;;;;;;;;;;;Pokemon;Base Set;Card 0049;;EN;
+Load Random 0050;RANDOM;30.00;2026-02-23;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0050""}"
+Load Tee 0051;ROUPA;23.00;2026-02-24;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0052;SAPATILHAS;132.00;2026-02-25;1;;;Novo;42;Model 0052;;;;;;;;;
+Load Ticket 0053;BILHETES;88.00;2026-02-26;2;;;;;;Evento 0053;2026-03-26;Lisboa;A24;;;;;;
+Load Card 0054;CARTAS;24.00;2026-02-27;1;;;;;;;;;;;Pokemon;Base Set;Card 0054;;EN;
+Load Random 0055;RANDOM;35.00;2026-02-28;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0055""}"
+Load Tee 0056;ROUPA;28.00;2026-02-01;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0057;SAPATILHAS;137.00;2026-02-02;1;;;Novo;42;Model 0057;;;;;;;;;
+Load Ticket 0058;BILHETES;93.00;2026-02-03;2;;;;;;Evento 0058;2026-03-03;Lisboa;A29;;;;;;
+Load Card 0059;CARTAS;29.00;2026-02-04;1;;;;;;;;;;;Pokemon;Base Set;Card 0059;;EN;
+Load Random 0060;RANDOM;10.00;2026-02-05;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0060""}"
+Load Tee 0061;ROUPA;21.00;2026-02-06;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0062;SAPATILHAS;142.00;2026-02-07;1;;;Novo;42;Model 0062;;;;;;;;;
+Load Ticket 0063;BILHETES;38.00;2026-02-08;2;;;;;;Evento 0063;2026-03-08;Lisboa;A4;;;;;;
+Load Card 0064;CARTAS;34.00;2026-02-09;1;;;;;;;;;;;Pokemon;Base Set;Card 0064;;EN;
+Load Random 0065;RANDOM;15.00;2026-02-10;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0065""}"
+Load Tee 0066;ROUPA;26.00;2026-02-11;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0067;SAPATILHAS;147.00;2026-02-12;1;;;Novo;42;Model 0067;;;;;;;;;
+Load Ticket 0068;BILHETES;43.00;2026-02-13;2;;;;;;Evento 0068;2026-03-13;Lisboa;A9;;;;;;
+Load Card 0069;CARTAS;39.00;2026-02-14;1;;;;;;;;;;;Pokemon;Base Set;Card 0069;;EN;
+Load Random 0070;RANDOM;20.00;2026-02-15;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0070""}"
+Load Tee 0071;ROUPA;31.00;2026-02-16;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0072;SAPATILHAS;152.00;2026-02-17;1;;;Novo;42;Model 0072;;;;;;;;;
+Load Ticket 0073;BILHETES;48.00;2026-02-18;2;;;;;;Evento 0073;2026-03-18;Lisboa;A14;;;;;;
+Load Card 0074;CARTAS;44.00;2026-02-19;1;;;;;;;;;;;Pokemon;Base Set;Card 0074;;EN;
+Load Random 0075;RANDOM;25.00;2026-02-20;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0075""}"
+Load Tee 0076;ROUPA;24.00;2026-02-21;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0077;SAPATILHAS;157.00;2026-02-22;1;;;Novo;42;Model 0077;;;;;;;;;
+Load Ticket 0078;BILHETES;53.00;2026-02-23;2;;;;;;Evento 0078;2026-03-23;Lisboa;A19;;;;;;
+Load Card 0079;CARTAS;49.00;2026-02-24;1;;;;;;;;;;;Pokemon;Base Set;Card 0079;;EN;
+Load Random 0080;RANDOM;30.00;2026-02-25;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0080""}"
+Load Tee 0081;ROUPA;29.00;2026-02-26;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0082;SAPATILHAS;162.00;2026-02-27;1;;;Novo;42;Model 0082;;;;;;;;;
+Load Ticket 0083;BILHETES;58.00;2026-02-28;2;;;;;;Evento 0083;2026-03-28;Lisboa;A24;;;;;;
+Load Card 0084;CARTAS;54.00;2026-02-01;1;;;;;;;;;;;Pokemon;Base Set;Card 0084;;EN;
+Load Random 0085;RANDOM;35.00;2026-02-02;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0085""}"
+Load Tee 0086;ROUPA;22.00;2026-02-03;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0087;SAPATILHAS;167.00;2026-02-04;1;;;Novo;42;Model 0087;;;;;;;;;
+Load Ticket 0088;BILHETES;63.00;2026-02-05;2;;;;;;Evento 0088;2026-03-05;Lisboa;A29;;;;;;
+Load Card 0089;CARTAS;59.00;2026-02-06;1;;;;;;;;;;;Pokemon;Base Set;Card 0089;;EN;
+Load Random 0090;RANDOM;10.00;2026-02-07;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0090""}"
+Load Tee 0091;ROUPA;27.00;2026-02-08;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0092;SAPATILHAS;82.00;2026-02-09;1;;;Novo;42;Model 0092;;;;;;;;;
+Load Ticket 0093;BILHETES;68.00;2026-02-10;2;;;;;;Evento 0093;2026-03-10;Lisboa;A4;;;;;;
+Load Card 0094;CARTAS;19.00;2026-02-11;1;;;;;;;;;;;Pokemon;Base Set;Card 0094;;EN;
+Load Random 0095;RANDOM;15.00;2026-02-12;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0095""}"
+Load Tee 0096;ROUPA;20.00;2026-02-13;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0097;SAPATILHAS;87.00;2026-02-14;1;;;Novo;42;Model 0097;;;;;;;;;
+Load Ticket 0098;BILHETES;73.00;2026-02-15;2;;;;;;Evento 0098;2026-03-15;Lisboa;A9;;;;;;
+Load Card 0099;CARTAS;24.00;2026-02-16;1;;;;;;;;;;;Pokemon;Base Set;Card 0099;;EN;
+Load Random 0100;RANDOM;20.00;2026-02-17;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0100""}"
+Load Tee 0101;ROUPA;25.00;2026-02-18;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0102;SAPATILHAS;92.00;2026-02-19;1;;;Novo;42;Model 0102;;;;;;;;;
+Load Ticket 0103;BILHETES;78.00;2026-02-20;2;;;;;;Evento 0103;2026-03-20;Lisboa;A14;;;;;;
+Load Card 0104;CARTAS;29.00;2026-02-21;1;;;;;;;;;;;Pokemon;Base Set;Card 0104;;EN;
+Load Random 0105;RANDOM;25.00;2026-02-22;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0105""}"
+Load Tee 0106;ROUPA;30.00;2026-02-23;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0107;SAPATILHAS;97.00;2026-02-24;1;;;Novo;42;Model 0107;;;;;;;;;
+Load Ticket 0108;BILHETES;83.00;2026-02-25;2;;;;;;Evento 0108;2026-03-25;Lisboa;A19;;;;;;
+Load Card 0109;CARTAS;34.00;2026-02-26;1;;;;;;;;;;;Pokemon;Base Set;Card 0109;;EN;
+Load Random 0110;RANDOM;30.00;2026-02-27;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0110""}"
+Load Tee 0111;ROUPA;23.00;2026-02-28;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0112;SAPATILHAS;102.00;2026-02-01;1;;;Novo;42;Model 0112;;;;;;;;;
+Load Ticket 0113;BILHETES;88.00;2026-02-02;2;;;;;;Evento 0113;2026-03-02;Lisboa;A24;;;;;;
+Load Card 0114;CARTAS;39.00;2026-02-03;1;;;;;;;;;;;Pokemon;Base Set;Card 0114;;EN;
+Load Random 0115;RANDOM;35.00;2026-02-04;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0115""}"
+Load Tee 0116;ROUPA;28.00;2026-02-05;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0117;SAPATILHAS;107.00;2026-02-06;1;;;Novo;42;Model 0117;;;;;;;;;
+Load Ticket 0118;BILHETES;93.00;2026-02-07;2;;;;;;Evento 0118;2026-03-07;Lisboa;A29;;;;;;
+Load Card 0119;CARTAS;44.00;2026-02-08;1;;;;;;;;;;;Pokemon;Base Set;Card 0119;;EN;
+Load Random 0120;RANDOM;10.00;2026-02-09;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0120""}"
+Load Tee 0121;ROUPA;21.00;2026-02-10;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0122;SAPATILHAS;112.00;2026-02-11;1;;;Novo;42;Model 0122;;;;;;;;;
+Load Ticket 0123;BILHETES;38.00;2026-02-12;2;;;;;;Evento 0123;2026-03-12;Lisboa;A4;;;;;;
+Load Card 0124;CARTAS;49.00;2026-02-13;1;;;;;;;;;;;Pokemon;Base Set;Card 0124;;EN;
+Load Random 0125;RANDOM;15.00;2026-02-14;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0125""}"
+Load Tee 0126;ROUPA;26.00;2026-02-15;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0127;SAPATILHAS;117.00;2026-02-16;1;;;Novo;42;Model 0127;;;;;;;;;
+Load Ticket 0128;BILHETES;43.00;2026-02-17;2;;;;;;Evento 0128;2026-03-17;Lisboa;A9;;;;;;
+Load Card 0129;CARTAS;54.00;2026-02-18;1;;;;;;;;;;;Pokemon;Base Set;Card 0129;;EN;
+Load Random 0130;RANDOM;20.00;2026-02-19;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0130""}"
+Load Tee 0131;ROUPA;31.00;2026-02-20;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0132;SAPATILHAS;122.00;2026-02-21;1;;;Novo;42;Model 0132;;;;;;;;;
+Load Ticket 0133;BILHETES;48.00;2026-02-22;2;;;;;;Evento 0133;2026-03-22;Lisboa;A14;;;;;;
+Load Card 0134;CARTAS;59.00;2026-02-23;1;;;;;;;;;;;Pokemon;Base Set;Card 0134;;EN;
+Load Random 0135;RANDOM;25.00;2026-02-24;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0135""}"
+Load Tee 0136;ROUPA;24.00;2026-02-25;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0137;SAPATILHAS;127.00;2026-02-26;1;;;Novo;42;Model 0137;;;;;;;;;
+Load Ticket 0138;BILHETES;53.00;2026-02-27;2;;;;;;Evento 0138;2026-03-27;Lisboa;A19;;;;;;
+Load Card 0139;CARTAS;19.00;2026-02-28;1;;;;;;;;;;;Pokemon;Base Set;Card 0139;;EN;
+Load Random 0140;RANDOM;30.00;2026-02-01;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0140""}"
+Load Tee 0141;ROUPA;29.00;2026-02-02;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0142;SAPATILHAS;132.00;2026-02-03;1;;;Novo;42;Model 0142;;;;;;;;;
+Load Ticket 0143;BILHETES;58.00;2026-02-04;2;;;;;;Evento 0143;2026-03-04;Lisboa;A24;;;;;;
+Load Card 0144;CARTAS;24.00;2026-02-05;1;;;;;;;;;;;Pokemon;Base Set;Card 0144;;EN;
+Load Random 0145;RANDOM;35.00;2026-02-06;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0145""}"
+Load Tee 0146;ROUPA;22.00;2026-02-07;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0147;SAPATILHAS;137.00;2026-02-08;1;;;Novo;42;Model 0147;;;;;;;;;
+Load Ticket 0148;BILHETES;63.00;2026-02-09;2;;;;;;Evento 0148;2026-03-09;Lisboa;A29;;;;;;
+Load Card 0149;CARTAS;29.00;2026-02-10;1;;;;;;;;;;;Pokemon;Base Set;Card 0149;;EN;
+Load Random 0150;RANDOM;10.00;2026-02-11;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0150""}"
+Load Tee 0151;ROUPA;27.00;2026-02-12;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0152;SAPATILHAS;142.00;2026-02-13;1;;;Novo;42;Model 0152;;;;;;;;;
+Load Ticket 0153;BILHETES;68.00;2026-02-14;2;;;;;;Evento 0153;2026-03-14;Lisboa;A4;;;;;;
+Load Card 0154;CARTAS;34.00;2026-02-15;1;;;;;;;;;;;Pokemon;Base Set;Card 0154;;EN;
+Load Random 0155;RANDOM;15.00;2026-02-16;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0155""}"
+Load Tee 0156;ROUPA;20.00;2026-02-17;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0157;SAPATILHAS;147.00;2026-02-18;1;;;Novo;42;Model 0157;;;;;;;;;
+Load Ticket 0158;BILHETES;73.00;2026-02-19;2;;;;;;Evento 0158;2026-03-19;Lisboa;A9;;;;;;
+Load Card 0159;CARTAS;39.00;2026-02-20;1;;;;;;;;;;;Pokemon;Base Set;Card 0159;;EN;
+Load Random 0160;RANDOM;20.00;2026-02-21;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0160""}"
+Load Tee 0161;ROUPA;25.00;2026-02-22;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0162;SAPATILHAS;152.00;2026-02-23;1;;;Novo;42;Model 0162;;;;;;;;;
+Load Ticket 0163;BILHETES;78.00;2026-02-24;2;;;;;;Evento 0163;2026-03-24;Lisboa;A14;;;;;;
+Load Card 0164;CARTAS;44.00;2026-02-25;1;;;;;;;;;;;Pokemon;Base Set;Card 0164;;EN;
+Load Random 0165;RANDOM;25.00;2026-02-26;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0165""}"
+Load Tee 0166;ROUPA;30.00;2026-02-27;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0167;SAPATILHAS;157.00;2026-02-28;1;;;Novo;42;Model 0167;;;;;;;;;
+Load Ticket 0168;BILHETES;83.00;2026-02-01;2;;;;;;Evento 0168;2026-03-01;Lisboa;A19;;;;;;
+Load Card 0169;CARTAS;49.00;2026-02-02;1;;;;;;;;;;;Pokemon;Base Set;Card 0169;;EN;
+Load Random 0170;RANDOM;30.00;2026-02-03;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0170""}"
+Load Tee 0171;ROUPA;23.00;2026-02-04;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0172;SAPATILHAS;162.00;2026-02-05;1;;;Novo;42;Model 0172;;;;;;;;;
+Load Ticket 0173;BILHETES;88.00;2026-02-06;2;;;;;;Evento 0173;2026-03-06;Lisboa;A24;;;;;;
+Load Card 0174;CARTAS;54.00;2026-02-07;1;;;;;;;;;;;Pokemon;Base Set;Card 0174;;EN;
+Load Random 0175;RANDOM;35.00;2026-02-08;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0175""}"
+Load Tee 0176;ROUPA;28.00;2026-02-09;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0177;SAPATILHAS;167.00;2026-02-10;1;;;Novo;42;Model 0177;;;;;;;;;
+Load Ticket 0178;BILHETES;93.00;2026-02-11;2;;;;;;Evento 0178;2026-03-11;Lisboa;A29;;;;;;
+Load Card 0179;CARTAS;59.00;2026-02-12;1;;;;;;;;;;;Pokemon;Base Set;Card 0179;;EN;
+Load Random 0180;RANDOM;10.00;2026-02-13;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0180""}"
+Load Tee 0181;ROUPA;21.00;2026-02-14;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0182;SAPATILHAS;82.00;2026-02-15;1;;;Novo;42;Model 0182;;;;;;;;;
+Load Ticket 0183;BILHETES;38.00;2026-02-16;2;;;;;;Evento 0183;2026-03-16;Lisboa;A4;;;;;;
+Load Card 0184;CARTAS;19.00;2026-02-17;1;;;;;;;;;;;Pokemon;Base Set;Card 0184;;EN;
+Load Random 0185;RANDOM;15.00;2026-02-18;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0185""}"
+Load Tee 0186;ROUPA;26.00;2026-02-19;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0187;SAPATILHAS;87.00;2026-02-20;1;;;Novo;42;Model 0187;;;;;;;;;
+Load Ticket 0188;BILHETES;43.00;2026-02-21;2;;;;;;Evento 0188;2026-03-21;Lisboa;A9;;;;;;
+Load Card 0189;CARTAS;24.00;2026-02-22;1;;;;;;;;;;;Pokemon;Base Set;Card 0189;;EN;
+Load Random 0190;RANDOM;20.00;2026-02-23;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0190""}"
+Load Tee 0191;ROUPA;31.00;2026-02-24;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0192;SAPATILHAS;92.00;2026-02-25;1;;;Novo;42;Model 0192;;;;;;;;;
+Load Ticket 0193;BILHETES;48.00;2026-02-26;2;;;;;;Evento 0193;2026-03-26;Lisboa;A14;;;;;;
+Load Card 0194;CARTAS;29.00;2026-02-27;1;;;;;;;;;;;Pokemon;Base Set;Card 0194;;EN;
+Load Random 0195;RANDOM;25.00;2026-02-28;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0195""}"
+Load Tee 0196;ROUPA;24.00;2026-02-01;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0197;SAPATILHAS;97.00;2026-02-02;1;;;Novo;42;Model 0197;;;;;;;;;
+Load Ticket 0198;BILHETES;53.00;2026-02-03;2;;;;;;Evento 0198;2026-03-03;Lisboa;A19;;;;;;
+Load Card 0199;CARTAS;34.00;2026-02-04;1;;;;;;;;;;;Pokemon;Base Set;Card 0199;;EN;
+Load Random 0200;RANDOM;30.00;2026-02-05;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0200""}"
+Load Tee 0201;ROUPA;29.00;2026-02-06;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0202;SAPATILHAS;102.00;2026-02-07;1;;;Novo;42;Model 0202;;;;;;;;;
+Load Ticket 0203;BILHETES;58.00;2026-02-08;2;;;;;;Evento 0203;2026-03-08;Lisboa;A24;;;;;;
+Load Card 0204;CARTAS;39.00;2026-02-09;1;;;;;;;;;;;Pokemon;Base Set;Card 0204;;EN;
+Load Random 0205;RANDOM;35.00;2026-02-10;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0205""}"
+Load Tee 0206;ROUPA;22.00;2026-02-11;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0207;SAPATILHAS;107.00;2026-02-12;1;;;Novo;42;Model 0207;;;;;;;;;
+Load Ticket 0208;BILHETES;63.00;2026-02-13;2;;;;;;Evento 0208;2026-03-13;Lisboa;A29;;;;;;
+Load Card 0209;CARTAS;44.00;2026-02-14;1;;;;;;;;;;;Pokemon;Base Set;Card 0209;;EN;
+Load Random 0210;RANDOM;10.00;2026-02-15;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0210""}"
+Load Tee 0211;ROUPA;27.00;2026-02-16;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0212;SAPATILHAS;112.00;2026-02-17;1;;;Novo;42;Model 0212;;;;;;;;;
+Load Ticket 0213;BILHETES;68.00;2026-02-18;2;;;;;;Evento 0213;2026-03-18;Lisboa;A4;;;;;;
+Load Card 0214;CARTAS;49.00;2026-02-19;1;;;;;;;;;;;Pokemon;Base Set;Card 0214;;EN;
+Load Random 0215;RANDOM;15.00;2026-02-20;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0215""}"
+Load Tee 0216;ROUPA;20.00;2026-02-21;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0217;SAPATILHAS;117.00;2026-02-22;1;;;Novo;42;Model 0217;;;;;;;;;
+Load Ticket 0218;BILHETES;73.00;2026-02-23;2;;;;;;Evento 0218;2026-03-23;Lisboa;A9;;;;;;
+Load Card 0219;CARTAS;54.00;2026-02-24;1;;;;;;;;;;;Pokemon;Base Set;Card 0219;;EN;
+Load Random 0220;RANDOM;20.00;2026-02-25;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0220""}"
+Load Tee 0221;ROUPA;25.00;2026-02-26;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0222;SAPATILHAS;122.00;2026-02-27;1;;;Novo;42;Model 0222;;;;;;;;;
+Load Ticket 0223;BILHETES;78.00;2026-02-28;2;;;;;;Evento 0223;2026-03-28;Lisboa;A14;;;;;;
+Load Card 0224;CARTAS;59.00;2026-02-01;1;;;;;;;;;;;Pokemon;Base Set;Card 0224;;EN;
+Load Random 0225;RANDOM;25.00;2026-02-02;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0225""}"
+Load Tee 0226;ROUPA;30.00;2026-02-03;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0227;SAPATILHAS;127.00;2026-02-04;1;;;Novo;42;Model 0227;;;;;;;;;
+Load Ticket 0228;BILHETES;83.00;2026-02-05;2;;;;;;Evento 0228;2026-03-05;Lisboa;A19;;;;;;
+Load Card 0229;CARTAS;19.00;2026-02-06;1;;;;;;;;;;;Pokemon;Base Set;Card 0229;;EN;
+Load Random 0230;RANDOM;30.00;2026-02-07;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0230""}"
+Load Tee 0231;ROUPA;23.00;2026-02-08;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0232;SAPATILHAS;132.00;2026-02-09;1;;;Novo;42;Model 0232;;;;;;;;;
+Load Ticket 0233;BILHETES;88.00;2026-02-10;2;;;;;;Evento 0233;2026-03-10;Lisboa;A24;;;;;;
+Load Card 0234;CARTAS;24.00;2026-02-11;1;;;;;;;;;;;Pokemon;Base Set;Card 0234;;EN;
+Load Random 0235;RANDOM;35.00;2026-02-12;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0235""}"
+Load Tee 0236;ROUPA;28.00;2026-02-13;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0237;SAPATILHAS;137.00;2026-02-14;1;;;Novo;42;Model 0237;;;;;;;;;
+Load Ticket 0238;BILHETES;93.00;2026-02-15;2;;;;;;Evento 0238;2026-03-15;Lisboa;A29;;;;;;
+Load Card 0239;CARTAS;29.00;2026-02-16;1;;;;;;;;;;;Pokemon;Base Set;Card 0239;;EN;
+Load Random 0240;RANDOM;10.00;2026-02-17;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0240""}"
+Load Tee 0241;ROUPA;21.00;2026-02-18;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0242;SAPATILHAS;142.00;2026-02-19;1;;;Novo;42;Model 0242;;;;;;;;;
+Load Ticket 0243;BILHETES;38.00;2026-02-20;2;;;;;;Evento 0243;2026-03-20;Lisboa;A4;;;;;;
+Load Card 0244;CARTAS;34.00;2026-02-21;1;;;;;;;;;;;Pokemon;Base Set;Card 0244;;EN;
+Load Random 0245;RANDOM;15.00;2026-02-22;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0245""}"
+Load Tee 0246;ROUPA;26.00;2026-02-23;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0247;SAPATILHAS;147.00;2026-02-24;1;;;Novo;42;Model 0247;;;;;;;;;
+Load Ticket 0248;BILHETES;43.00;2026-02-25;2;;;;;;Evento 0248;2026-03-25;Lisboa;A9;;;;;;
+Load Card 0249;CARTAS;39.00;2026-02-26;1;;;;;;;;;;;Pokemon;Base Set;Card 0249;;EN;
+Load Random 0250;RANDOM;20.00;2026-02-27;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0250""}"
+Load Tee 0251;ROUPA;31.00;2026-02-28;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0252;SAPATILHAS;152.00;2026-02-01;1;;;Novo;42;Model 0252;;;;;;;;;
+Load Ticket 0253;BILHETES;48.00;2026-02-02;2;;;;;;Evento 0253;2026-03-02;Lisboa;A14;;;;;;
+Load Card 0254;CARTAS;44.00;2026-02-03;1;;;;;;;;;;;Pokemon;Base Set;Card 0254;;EN;
+Load Random 0255;RANDOM;25.00;2026-02-04;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0255""}"
+Load Tee 0256;ROUPA;24.00;2026-02-05;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0257;SAPATILHAS;157.00;2026-02-06;1;;;Novo;42;Model 0257;;;;;;;;;
+Load Ticket 0258;BILHETES;53.00;2026-02-07;2;;;;;;Evento 0258;2026-03-07;Lisboa;A19;;;;;;
+Load Card 0259;CARTAS;49.00;2026-02-08;1;;;;;;;;;;;Pokemon;Base Set;Card 0259;;EN;
+Load Random 0260;RANDOM;30.00;2026-02-09;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0260""}"
+Load Tee 0261;ROUPA;29.00;2026-02-10;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0262;SAPATILHAS;162.00;2026-02-11;1;;;Novo;42;Model 0262;;;;;;;;;
+Load Ticket 0263;BILHETES;58.00;2026-02-12;2;;;;;;Evento 0263;2026-03-12;Lisboa;A24;;;;;;
+Load Card 0264;CARTAS;54.00;2026-02-13;1;;;;;;;;;;;Pokemon;Base Set;Card 0264;;EN;
+Load Random 0265;RANDOM;35.00;2026-02-14;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0265""}"
+Load Tee 0266;ROUPA;22.00;2026-02-15;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0267;SAPATILHAS;167.00;2026-02-16;1;;;Novo;42;Model 0267;;;;;;;;;
+Load Ticket 0268;BILHETES;63.00;2026-02-17;2;;;;;;Evento 0268;2026-03-17;Lisboa;A29;;;;;;
+Load Card 0269;CARTAS;59.00;2026-02-18;1;;;;;;;;;;;Pokemon;Base Set;Card 0269;;EN;
+Load Random 0270;RANDOM;10.00;2026-02-19;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0270""}"
+Load Tee 0271;ROUPA;27.00;2026-02-20;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0272;SAPATILHAS;82.00;2026-02-21;1;;;Novo;42;Model 0272;;;;;;;;;
+Load Ticket 0273;BILHETES;68.00;2026-02-22;2;;;;;;Evento 0273;2026-03-22;Lisboa;A4;;;;;;
+Load Card 0274;CARTAS;19.00;2026-02-23;1;;;;;;;;;;;Pokemon;Base Set;Card 0274;;EN;
+Load Random 0275;RANDOM;15.00;2026-02-24;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0275""}"
+Load Tee 0276;ROUPA;20.00;2026-02-25;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0277;SAPATILHAS;87.00;2026-02-26;1;;;Novo;42;Model 0277;;;;;;;;;
+Load Ticket 0278;BILHETES;73.00;2026-02-27;2;;;;;;Evento 0278;2026-03-27;Lisboa;A9;;;;;;
+Load Card 0279;CARTAS;24.00;2026-02-28;1;;;;;;;;;;;Pokemon;Base Set;Card 0279;;EN;
+Load Random 0280;RANDOM;20.00;2026-02-01;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0280""}"
+Load Tee 0281;ROUPA;25.00;2026-02-02;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0282;SAPATILHAS;92.00;2026-02-03;1;;;Novo;42;Model 0282;;;;;;;;;
+Load Ticket 0283;BILHETES;78.00;2026-02-04;2;;;;;;Evento 0283;2026-03-04;Lisboa;A14;;;;;;
+Load Card 0284;CARTAS;29.00;2026-02-05;1;;;;;;;;;;;Pokemon;Base Set;Card 0284;;EN;
+Load Random 0285;RANDOM;25.00;2026-02-06;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0285""}"
+Load Tee 0286;ROUPA;30.00;2026-02-07;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0287;SAPATILHAS;97.00;2026-02-08;1;;;Novo;42;Model 0287;;;;;;;;;
+Load Ticket 0288;BILHETES;83.00;2026-02-09;2;;;;;;Evento 0288;2026-03-09;Lisboa;A19;;;;;;
+Load Card 0289;CARTAS;34.00;2026-02-10;1;;;;;;;;;;;Pokemon;Base Set;Card 0289;;EN;
+Load Random 0290;RANDOM;30.00;2026-02-11;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0290""}"
+Load Tee 0291;ROUPA;23.00;2026-02-12;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0292;SAPATILHAS;102.00;2026-02-13;1;;;Novo;42;Model 0292;;;;;;;;;
+Load Ticket 0293;BILHETES;88.00;2026-02-14;2;;;;;;Evento 0293;2026-03-14;Lisboa;A24;;;;;;
+Load Card 0294;CARTAS;39.00;2026-02-15;1;;;;;;;;;;;Pokemon;Base Set;Card 0294;;EN;
+Load Random 0295;RANDOM;35.00;2026-02-16;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0295""}"
+Load Tee 0296;ROUPA;28.00;2026-02-17;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0297;SAPATILHAS;107.00;2026-02-18;1;;;Novo;42;Model 0297;;;;;;;;;
+Load Ticket 0298;BILHETES;93.00;2026-02-19;2;;;;;;Evento 0298;2026-03-19;Lisboa;A29;;;;;;
+Load Card 0299;CARTAS;44.00;2026-02-20;1;;;;;;;;;;;Pokemon;Base Set;Card 0299;;EN;
+Load Random 0300;RANDOM;10.00;2026-02-21;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0300""}"
+Load Tee 0301;ROUPA;21.00;2026-02-22;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0302;SAPATILHAS;112.00;2026-02-23;1;;;Novo;42;Model 0302;;;;;;;;;
+Load Ticket 0303;BILHETES;38.00;2026-02-24;2;;;;;;Evento 0303;2026-03-24;Lisboa;A4;;;;;;
+Load Card 0304;CARTAS;49.00;2026-02-25;1;;;;;;;;;;;Pokemon;Base Set;Card 0304;;EN;
+Load Random 0305;RANDOM;15.00;2026-02-26;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0305""}"
+Load Tee 0306;ROUPA;26.00;2026-02-27;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0307;SAPATILHAS;117.00;2026-02-28;1;;;Novo;42;Model 0307;;;;;;;;;
+Load Ticket 0308;BILHETES;43.00;2026-02-01;2;;;;;;Evento 0308;2026-03-01;Lisboa;A9;;;;;;
+Load Card 0309;CARTAS;54.00;2026-02-02;1;;;;;;;;;;;Pokemon;Base Set;Card 0309;;EN;
+Load Random 0310;RANDOM;20.00;2026-02-03;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0310""}"
+Load Tee 0311;ROUPA;31.00;2026-02-04;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0312;SAPATILHAS;122.00;2026-02-05;1;;;Novo;42;Model 0312;;;;;;;;;
+Load Ticket 0313;BILHETES;48.00;2026-02-06;2;;;;;;Evento 0313;2026-03-06;Lisboa;A14;;;;;;
+Load Card 0314;CARTAS;59.00;2026-02-07;1;;;;;;;;;;;Pokemon;Base Set;Card 0314;;EN;
+Load Random 0315;RANDOM;25.00;2026-02-08;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0315""}"
+Load Tee 0316;ROUPA;24.00;2026-02-09;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0317;SAPATILHAS;127.00;2026-02-10;1;;;Novo;42;Model 0317;;;;;;;;;
+Load Ticket 0318;BILHETES;53.00;2026-02-11;2;;;;;;Evento 0318;2026-03-11;Lisboa;A19;;;;;;
+Load Card 0319;CARTAS;19.00;2026-02-12;1;;;;;;;;;;;Pokemon;Base Set;Card 0319;;EN;
+Load Random 0320;RANDOM;30.00;2026-02-13;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0320""}"
+Load Tee 0321;ROUPA;29.00;2026-02-14;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0322;SAPATILHAS;132.00;2026-02-15;1;;;Novo;42;Model 0322;;;;;;;;;
+Load Ticket 0323;BILHETES;58.00;2026-02-16;2;;;;;;Evento 0323;2026-03-16;Lisboa;A24;;;;;;
+Load Card 0324;CARTAS;24.00;2026-02-17;1;;;;;;;;;;;Pokemon;Base Set;Card 0324;;EN;
+Load Random 0325;RANDOM;35.00;2026-02-18;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0325""}"
+Load Tee 0326;ROUPA;22.00;2026-02-19;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0327;SAPATILHAS;137.00;2026-02-20;1;;;Novo;42;Model 0327;;;;;;;;;
+Load Ticket 0328;BILHETES;63.00;2026-02-21;2;;;;;;Evento 0328;2026-03-21;Lisboa;A29;;;;;;
+Load Card 0329;CARTAS;29.00;2026-02-22;1;;;;;;;;;;;Pokemon;Base Set;Card 0329;;EN;
+Load Random 0330;RANDOM;10.00;2026-02-23;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0330""}"
+Load Tee 0331;ROUPA;27.00;2026-02-24;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0332;SAPATILHAS;142.00;2026-02-25;1;;;Novo;42;Model 0332;;;;;;;;;
+Load Ticket 0333;BILHETES;68.00;2026-02-26;2;;;;;;Evento 0333;2026-03-26;Lisboa;A4;;;;;;
+Load Card 0334;CARTAS;34.00;2026-02-27;1;;;;;;;;;;;Pokemon;Base Set;Card 0334;;EN;
+Load Random 0335;RANDOM;15.00;2026-02-28;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0335""}"
+Load Tee 0336;ROUPA;20.00;2026-02-01;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0337;SAPATILHAS;147.00;2026-02-02;1;;;Novo;42;Model 0337;;;;;;;;;
+Load Ticket 0338;BILHETES;73.00;2026-02-03;2;;;;;;Evento 0338;2026-03-03;Lisboa;A9;;;;;;
+Load Card 0339;CARTAS;39.00;2026-02-04;1;;;;;;;;;;;Pokemon;Base Set;Card 0339;;EN;
+Load Random 0340;RANDOM;20.00;2026-02-05;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0340""}"
+Load Tee 0341;ROUPA;25.00;2026-02-06;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0342;SAPATILHAS;152.00;2026-02-07;1;;;Novo;42;Model 0342;;;;;;;;;
+Load Ticket 0343;BILHETES;78.00;2026-02-08;2;;;;;;Evento 0343;2026-03-08;Lisboa;A14;;;;;;
+Load Card 0344;CARTAS;44.00;2026-02-09;1;;;;;;;;;;;Pokemon;Base Set;Card 0344;;EN;
+Load Random 0345;RANDOM;25.00;2026-02-10;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0345""}"
+Load Tee 0346;ROUPA;30.00;2026-02-11;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0347;SAPATILHAS;157.00;2026-02-12;1;;;Novo;42;Model 0347;;;;;;;;;
+Load Ticket 0348;BILHETES;83.00;2026-02-13;2;;;;;;Evento 0348;2026-03-13;Lisboa;A19;;;;;;
+Load Card 0349;CARTAS;49.00;2026-02-14;1;;;;;;;;;;;Pokemon;Base Set;Card 0349;;EN;
+Load Random 0350;RANDOM;30.00;2026-02-15;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0350""}"
+Load Tee 0351;ROUPA;23.00;2026-02-16;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0352;SAPATILHAS;162.00;2026-02-17;1;;;Novo;42;Model 0352;;;;;;;;;
+Load Ticket 0353;BILHETES;88.00;2026-02-18;2;;;;;;Evento 0353;2026-03-18;Lisboa;A24;;;;;;
+Load Card 0354;CARTAS;54.00;2026-02-19;1;;;;;;;;;;;Pokemon;Base Set;Card 0354;;EN;
+Load Random 0355;RANDOM;35.00;2026-02-20;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0355""}"
+Load Tee 0356;ROUPA;28.00;2026-02-21;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0357;SAPATILHAS;167.00;2026-02-22;1;;;Novo;42;Model 0357;;;;;;;;;
+Load Ticket 0358;BILHETES;93.00;2026-02-23;2;;;;;;Evento 0358;2026-03-23;Lisboa;A29;;;;;;
+Load Card 0359;CARTAS;59.00;2026-02-24;1;;;;;;;;;;;Pokemon;Base Set;Card 0359;;EN;
+Load Random 0360;RANDOM;10.00;2026-02-25;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0360""}"
+Load Tee 0361;ROUPA;21.00;2026-02-26;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0362;SAPATILHAS;82.00;2026-02-27;1;;;Novo;42;Model 0362;;;;;;;;;
+Load Ticket 0363;BILHETES;38.00;2026-02-28;2;;;;;;Evento 0363;2026-03-28;Lisboa;A4;;;;;;
+Load Card 0364;CARTAS;19.00;2026-02-01;1;;;;;;;;;;;Pokemon;Base Set;Card 0364;;EN;
+Load Random 0365;RANDOM;15.00;2026-02-02;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0365""}"
+Load Tee 0366;ROUPA;26.00;2026-02-03;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0367;SAPATILHAS;87.00;2026-02-04;1;;;Novo;42;Model 0367;;;;;;;;;
+Load Ticket 0368;BILHETES;43.00;2026-02-05;2;;;;;;Evento 0368;2026-03-05;Lisboa;A9;;;;;;
+Load Card 0369;CARTAS;24.00;2026-02-06;1;;;;;;;;;;;Pokemon;Base Set;Card 0369;;EN;
+Load Random 0370;RANDOM;20.00;2026-02-07;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0370""}"
+Load Tee 0371;ROUPA;31.00;2026-02-08;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0372;SAPATILHAS;92.00;2026-02-09;1;;;Novo;42;Model 0372;;;;;;;;;
+Load Ticket 0373;BILHETES;48.00;2026-02-10;2;;;;;;Evento 0373;2026-03-10;Lisboa;A14;;;;;;
+Load Card 0374;CARTAS;29.00;2026-02-11;1;;;;;;;;;;;Pokemon;Base Set;Card 0374;;EN;
+Load Random 0375;RANDOM;25.00;2026-02-12;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0375""}"
+Load Tee 0376;ROUPA;24.00;2026-02-13;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0377;SAPATILHAS;97.00;2026-02-14;1;;;Novo;42;Model 0377;;;;;;;;;
+Load Ticket 0378;BILHETES;53.00;2026-02-15;2;;;;;;Evento 0378;2026-03-15;Lisboa;A19;;;;;;
+Load Card 0379;CARTAS;34.00;2026-02-16;1;;;;;;;;;;;Pokemon;Base Set;Card 0379;;EN;
+Load Random 0380;RANDOM;30.00;2026-02-17;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0380""}"
+Load Tee 0381;ROUPA;29.00;2026-02-18;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0382;SAPATILHAS;102.00;2026-02-19;1;;;Novo;42;Model 0382;;;;;;;;;
+Load Ticket 0383;BILHETES;58.00;2026-02-20;2;;;;;;Evento 0383;2026-03-20;Lisboa;A24;;;;;;
+Load Card 0384;CARTAS;39.00;2026-02-21;1;;;;;;;;;;;Pokemon;Base Set;Card 0384;;EN;
+Load Random 0385;RANDOM;35.00;2026-02-22;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0385""}"
+Load Tee 0386;ROUPA;22.00;2026-02-23;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0387;SAPATILHAS;107.00;2026-02-24;1;;;Novo;42;Model 0387;;;;;;;;;
+Load Ticket 0388;BILHETES;63.00;2026-02-25;2;;;;;;Evento 0388;2026-03-25;Lisboa;A29;;;;;;
+Load Card 0389;CARTAS;44.00;2026-02-26;1;;;;;;;;;;;Pokemon;Base Set;Card 0389;;EN;
+Load Random 0390;RANDOM;10.00;2026-02-27;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0390""}"
+Load Tee 0391;ROUPA;27.00;2026-02-28;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0392;SAPATILHAS;112.00;2026-02-01;1;;;Novo;42;Model 0392;;;;;;;;;
+Load Ticket 0393;BILHETES;68.00;2026-02-02;2;;;;;;Evento 0393;2026-03-02;Lisboa;A4;;;;;;
+Load Card 0394;CARTAS;49.00;2026-02-03;1;;;;;;;;;;;Pokemon;Base Set;Card 0394;;EN;
+Load Random 0395;RANDOM;15.00;2026-02-04;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0395""}"
+Load Tee 0396;ROUPA;20.00;2026-02-05;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0397;SAPATILHAS;117.00;2026-02-06;1;;;Novo;42;Model 0397;;;;;;;;;
+Load Ticket 0398;BILHETES;73.00;2026-02-07;2;;;;;;Evento 0398;2026-03-07;Lisboa;A9;;;;;;
+Load Card 0399;CARTAS;54.00;2026-02-08;1;;;;;;;;;;;Pokemon;Base Set;Card 0399;;EN;
+Load Random 0400;RANDOM;20.00;2026-02-09;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0400""}"
+Load Tee 0401;ROUPA;25.00;2026-02-10;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0402;SAPATILHAS;122.00;2026-02-11;1;;;Novo;42;Model 0402;;;;;;;;;
+Load Ticket 0403;BILHETES;78.00;2026-02-12;2;;;;;;Evento 0403;2026-03-12;Lisboa;A14;;;;;;
+Load Card 0404;CARTAS;59.00;2026-02-13;1;;;;;;;;;;;Pokemon;Base Set;Card 0404;;EN;
+Load Random 0405;RANDOM;25.00;2026-02-14;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0405""}"
+Load Tee 0406;ROUPA;30.00;2026-02-15;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0407;SAPATILHAS;127.00;2026-02-16;1;;;Novo;42;Model 0407;;;;;;;;;
+Load Ticket 0408;BILHETES;83.00;2026-02-17;2;;;;;;Evento 0408;2026-03-17;Lisboa;A19;;;;;;
+Load Card 0409;CARTAS;19.00;2026-02-18;1;;;;;;;;;;;Pokemon;Base Set;Card 0409;;EN;
+Load Random 0410;RANDOM;30.00;2026-02-19;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0410""}"
+Load Tee 0411;ROUPA;23.00;2026-02-20;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0412;SAPATILHAS;132.00;2026-02-21;1;;;Novo;42;Model 0412;;;;;;;;;
+Load Ticket 0413;BILHETES;88.00;2026-02-22;2;;;;;;Evento 0413;2026-03-22;Lisboa;A24;;;;;;
+Load Card 0414;CARTAS;24.00;2026-02-23;1;;;;;;;;;;;Pokemon;Base Set;Card 0414;;EN;
+Load Random 0415;RANDOM;35.00;2026-02-24;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0415""}"
+Load Tee 0416;ROUPA;28.00;2026-02-25;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0417;SAPATILHAS;137.00;2026-02-26;1;;;Novo;42;Model 0417;;;;;;;;;
+Load Ticket 0418;BILHETES;93.00;2026-02-27;2;;;;;;Evento 0418;2026-03-27;Lisboa;A29;;;;;;
+Load Card 0419;CARTAS;29.00;2026-02-28;1;;;;;;;;;;;Pokemon;Base Set;Card 0419;;EN;
+Load Random 0420;RANDOM;10.00;2026-02-01;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0420""}"
+Load Tee 0421;ROUPA;21.00;2026-02-02;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0422;SAPATILHAS;142.00;2026-02-03;1;;;Novo;42;Model 0422;;;;;;;;;
+Load Ticket 0423;BILHETES;38.00;2026-02-04;2;;;;;;Evento 0423;2026-03-04;Lisboa;A4;;;;;;
+Load Card 0424;CARTAS;34.00;2026-02-05;1;;;;;;;;;;;Pokemon;Base Set;Card 0424;;EN;
+Load Random 0425;RANDOM;15.00;2026-02-06;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0425""}"
+Load Tee 0426;ROUPA;26.00;2026-02-07;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0427;SAPATILHAS;147.00;2026-02-08;1;;;Novo;42;Model 0427;;;;;;;;;
+Load Ticket 0428;BILHETES;43.00;2026-02-09;2;;;;;;Evento 0428;2026-03-09;Lisboa;A9;;;;;;
+Load Card 0429;CARTAS;39.00;2026-02-10;1;;;;;;;;;;;Pokemon;Base Set;Card 0429;;EN;
+Load Random 0430;RANDOM;20.00;2026-02-11;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0430""}"
+Load Tee 0431;ROUPA;31.00;2026-02-12;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0432;SAPATILHAS;152.00;2026-02-13;1;;;Novo;42;Model 0432;;;;;;;;;
+Load Ticket 0433;BILHETES;48.00;2026-02-14;2;;;;;;Evento 0433;2026-03-14;Lisboa;A14;;;;;;
+Load Card 0434;CARTAS;44.00;2026-02-15;1;;;;;;;;;;;Pokemon;Base Set;Card 0434;;EN;
+Load Random 0435;RANDOM;25.00;2026-02-16;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0435""}"
+Load Tee 0436;ROUPA;24.00;2026-02-17;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0437;SAPATILHAS;157.00;2026-02-18;1;;;Novo;42;Model 0437;;;;;;;;;
+Load Ticket 0438;BILHETES;53.00;2026-02-19;2;;;;;;Evento 0438;2026-03-19;Lisboa;A19;;;;;;
+Load Card 0439;CARTAS;49.00;2026-02-20;1;;;;;;;;;;;Pokemon;Base Set;Card 0439;;EN;
+Load Random 0440;RANDOM;30.00;2026-02-21;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0440""}"
+Load Tee 0441;ROUPA;29.00;2026-02-22;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0442;SAPATILHAS;162.00;2026-02-23;1;;;Novo;42;Model 0442;;;;;;;;;
+Load Ticket 0443;BILHETES;58.00;2026-02-24;2;;;;;;Evento 0443;2026-03-24;Lisboa;A24;;;;;;
+Load Card 0444;CARTAS;54.00;2026-02-25;1;;;;;;;;;;;Pokemon;Base Set;Card 0444;;EN;
+Load Random 0445;RANDOM;35.00;2026-02-26;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0445""}"
+Load Tee 0446;ROUPA;22.00;2026-02-27;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0447;SAPATILHAS;167.00;2026-02-28;1;;;Novo;42;Model 0447;;;;;;;;;
+Load Ticket 0448;BILHETES;63.00;2026-02-01;2;;;;;;Evento 0448;2026-03-01;Lisboa;A29;;;;;;
+Load Card 0449;CARTAS;59.00;2026-02-02;1;;;;;;;;;;;Pokemon;Base Set;Card 0449;;EN;
+Load Random 0450;RANDOM;10.00;2026-02-03;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0450""}"
+Load Tee 0451;ROUPA;27.00;2026-02-04;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0452;SAPATILHAS;82.00;2026-02-05;1;;;Novo;42;Model 0452;;;;;;;;;
+Load Ticket 0453;BILHETES;68.00;2026-02-06;2;;;;;;Evento 0453;2026-03-06;Lisboa;A4;;;;;;
+Load Card 0454;CARTAS;19.00;2026-02-07;1;;;;;;;;;;;Pokemon;Base Set;Card 0454;;EN;
+Load Random 0455;RANDOM;15.00;2026-02-08;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0455""}"
+Load Tee 0456;ROUPA;20.00;2026-02-09;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0457;SAPATILHAS;87.00;2026-02-10;1;;;Novo;42;Model 0457;;;;;;;;;
+Load Ticket 0458;BILHETES;73.00;2026-02-11;2;;;;;;Evento 0458;2026-03-11;Lisboa;A9;;;;;;
+Load Card 0459;CARTAS;24.00;2026-02-12;1;;;;;;;;;;;Pokemon;Base Set;Card 0459;;EN;
+Load Random 0460;RANDOM;20.00;2026-02-13;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0460""}"
+Load Tee 0461;ROUPA;25.00;2026-02-14;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0462;SAPATILHAS;92.00;2026-02-15;1;;;Novo;42;Model 0462;;;;;;;;;
+Load Ticket 0463;BILHETES;78.00;2026-02-16;2;;;;;;Evento 0463;2026-03-16;Lisboa;A14;;;;;;
+Load Card 0464;CARTAS;29.00;2026-02-17;1;;;;;;;;;;;Pokemon;Base Set;Card 0464;;EN;
+Load Random 0465;RANDOM;25.00;2026-02-18;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0465""}"
+Load Tee 0466;ROUPA;30.00;2026-02-19;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0467;SAPATILHAS;97.00;2026-02-20;1;;;Novo;42;Model 0467;;;;;;;;;
+Load Ticket 0468;BILHETES;83.00;2026-02-21;2;;;;;;Evento 0468;2026-03-21;Lisboa;A19;;;;;;
+Load Card 0469;CARTAS;34.00;2026-02-22;1;;;;;;;;;;;Pokemon;Base Set;Card 0469;;EN;
+Load Random 0470;RANDOM;30.00;2026-02-23;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0470""}"
+Load Tee 0471;ROUPA;23.00;2026-02-24;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0472;SAPATILHAS;102.00;2026-02-25;1;;;Novo;42;Model 0472;;;;;;;;;
+Load Ticket 0473;BILHETES;88.00;2026-02-26;2;;;;;;Evento 0473;2026-03-26;Lisboa;A24;;;;;;
+Load Card 0474;CARTAS;39.00;2026-02-27;1;;;;;;;;;;;Pokemon;Base Set;Card 0474;;EN;
+Load Random 0475;RANDOM;35.00;2026-02-28;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0475""}"
+Load Tee 0476;ROUPA;28.00;2026-02-01;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0477;SAPATILHAS;107.00;2026-02-02;1;;;Novo;42;Model 0477;;;;;;;;;
+Load Ticket 0478;BILHETES;93.00;2026-02-03;2;;;;;;Evento 0478;2026-03-03;Lisboa;A29;;;;;;
+Load Card 0479;CARTAS;44.00;2026-02-04;1;;;;;;;;;;;Pokemon;Base Set;Card 0479;;EN;
+Load Random 0480;RANDOM;10.00;2026-02-05;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0480""}"
+Load Tee 0481;ROUPA;21.00;2026-02-06;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0482;SAPATILHAS;112.00;2026-02-07;1;;;Novo;42;Model 0482;;;;;;;;;
+Load Ticket 0483;BILHETES;38.00;2026-02-08;2;;;;;;Evento 0483;2026-03-08;Lisboa;A4;;;;;;
+Load Card 0484;CARTAS;49.00;2026-02-09;1;;;;;;;;;;;Pokemon;Base Set;Card 0484;;EN;
+Load Random 0485;RANDOM;15.00;2026-02-10;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0485""}"
+Load Tee 0486;ROUPA;26.00;2026-02-11;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0487;SAPATILHAS;117.00;2026-02-12;1;;;Novo;42;Model 0487;;;;;;;;;
+Load Ticket 0488;BILHETES;43.00;2026-02-13;2;;;;;;Evento 0488;2026-03-13;Lisboa;A9;;;;;;
+Load Card 0489;CARTAS;54.00;2026-02-14;1;;;;;;;;;;;Pokemon;Base Set;Card 0489;;EN;
+Load Random 0490;RANDOM;20.00;2026-02-15;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0490""}"
+Load Tee 0491;ROUPA;31.00;2026-02-16;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0492;SAPATILHAS;122.00;2026-02-17;1;;;Novo;42;Model 0492;;;;;;;;;
+Load Ticket 0493;BILHETES;48.00;2026-02-18;2;;;;;;Evento 0493;2026-03-18;Lisboa;A14;;;;;;
+Load Card 0494;CARTAS;59.00;2026-02-19;1;;;;;;;;;;;Pokemon;Base Set;Card 0494;;EN;
+Load Random 0495;RANDOM;25.00;2026-02-20;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0495""}"
+Load Tee 0496;ROUPA;24.00;2026-02-21;1;M;Nike;Usado;;;;;;;;;;;
+Load Sneaker 0497;SAPATILHAS;127.00;2026-02-22;1;;;Novo;42;Model 0497;;;;;;;;;
+Load Ticket 0498;BILHETES;53.00;2026-02-23;2;;;;;;Evento 0498;2026-03-23;Lisboa;A19;;;;;;
+Load Card 0499;CARTAS;19.00;2026-02-24;1;;;;;;;;;;;Pokemon;Base Set;Card 0499;;EN;
+Load Random 0500;RANDOM;30.00;2026-02-25;1;;;;;;;;;;;;;;;;;"{""batch"":""beta"",""sku"":""R0500""}"

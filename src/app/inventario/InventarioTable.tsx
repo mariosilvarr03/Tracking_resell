@@ -56,7 +56,7 @@ type CsvPreviewState = {
   }>;
 };
 
-const ALLOWED_ITEM_TYPES = new Set(INVENTORY_ALLOWED_TYPES);
+const ALLOWED_ITEM_TYPES: ReadonlySet<string> = new Set(INVENTORY_ALLOWED_TYPES);
 
 function escapeCsvCell(value: string | number | null | undefined) {
   const normalized = String(value ?? "").replace(/"/g, '""');
