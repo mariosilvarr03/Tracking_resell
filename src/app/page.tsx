@@ -27,6 +27,24 @@ export default function Home() {
           <h2 className="text-xl font-semibold text-slate-900">Guia rápido</h2>
         </div>
         <div className="card-content">
+          <div className="mb-4 grid gap-3 sm:grid-cols-2">
+            <a
+              href="https://forms.gle/R2Dg8pdhijD8Y7iu5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary text-center"
+            >
+              Google Forms (Feedback)
+            </a>
+            <a
+              href="https://discord.gg/y42dW3Py"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost text-center"
+            >
+              Entrar no Discord
+            </a>
+          </div>
           <ol className="list-decimal space-y-3 pl-5 text-slate-700">
             <li>
               <strong>Adicionar compras:</strong> entra em <span className="font-semibold">Inventário</span> e cria os teus itens.

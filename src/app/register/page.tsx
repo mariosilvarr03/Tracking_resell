@@ -24,7 +24,7 @@ export default function RegisterPage() {
     if (error) return setError(error.message);
 
     // Se desligares "Confirm email" no Supabase, isto entra logo.
-    router.push("/dashboard/mensal");
+    router.push("/");
     router.refresh();
   }
 
